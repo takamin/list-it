@@ -1,0 +1,20 @@
+{
+    "name": "list-it",
+    "version": "0.0.0",
+    "description":
+        "Create a table of string from the bi-dimensional array.",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/takamin/list-it"
+	},
+    "directories": {
+        "lib": "./lib"
+    },
+    "main": "./lib/index.js",
+    "scripts": {
+        "test": "node ./test/test.js"
+    },
+    "keywords": [ "text", "format", "cli", "array" ],
+    "author": "Koji Takami",
+    "license": "MIT"
+}
