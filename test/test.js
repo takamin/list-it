@@ -15,13 +15,13 @@ function describe(name, func) {
     titles = titles.slice(0, titles.length - 1);
 }
 function it(name, test) {
-    logbuf.push(titles.join(" ") + " " + name);
+    logbuf.d(titles.join(" ") + " " + name);
     try {
         test();
-        logbuf.push("OK");
+        logbuf.d("OK");
         logbuf.nl();
     } catch(ex) {
-        logbuf.push("FAIL");
+        logbuf.d("FAIL");
         logbuf.nl();
         test();
     }
@@ -37,7 +37,7 @@ describe("listit.buffer", function() {
     describe("#push", function() {
         it('should represent a data', function() {
             var buffer = new listit.buffer();
-            buffer.push("A");
+            buffer.d("A");
             assert.equal(buffer.toString(), "A");
         });
     });
@@ -51,20 +51,20 @@ describe("listit.buffer", function() {
             var buffer = new listit.buffer();
             buffer.nl();
             buffer.nl();
-            assert.equal(buffer.toString(), "A\n");
+            assert.equal(buffer.toString(), "\n");
         });
     });
     describe("#toString", function() {
         it('should represent multi column data', function() {
             var buffer = new listit.buffer();
-            buffer.push("A").push("BB").push("CCC");
+            buffer.d("A").d("BB").d("CCC");
             assert.equal(buffer.toString(), "A BB CCC");
         });
         it('should represent multi row-column data', function() {
             var buffer = new listit.buffer();
-            buffer.push("A").push("BB").push("CCC");
+            buffer.d("A").d("BB").d("CCC");
             buffer.nl();
-            buffer.push("DDDD").push("EEEEE").push("FFFFFF");
+            buffer.d("DDDD").d("EEEEE").d("FFFFFF");
             assert.equal(buffer.toString(),
                 "A    BB    CCC   \n" + 
                 "DDDD EEEEE FFFFFF");
