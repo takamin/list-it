@@ -4,7 +4,42 @@ list-it - Fixed Column Text Table Formatter
 DESCRIPTION
 -----------
 
-This module provides the feature to get a preformatted text table string.
+This module is used to create a preformatted text table.
+
+Each columns in all rows are aligned in vertical.
+
+You can put it to the console or a preformated text-file.
+
+METHODS
+-------
+
+### buffer()
+
+Creates a `ListItBuffer` instance and returns it.
+
+The instance has current row that is a position for the columns to be added.
+
+You cannot edit the columns and rows that were already added.
+
+See the examples below.
+
+### ListItBuffer.d(string)
+
+Adds a new column to the current row.
+The `d` is representing 'data'.
+
+Returns `this` object. So you can chain a method call.
+
+### ListItBuffer.nl()
+
+Ends up a process for the current row.
+
+Returns `this` object.
+
+### ListItBuffer.toString()
+
+Returns preformatted text table.
+
 
 SAMPLE
 ------
