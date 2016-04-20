@@ -1,8 +1,8 @@
 {
     "name": "list-it",
-    "version": "0.0.0",
+    "version": "0.1.0",
     "description":
-        "Create a table of string from the bi-dimensional array.",
+        "This module is used to create a preformatted text table.",
     "repository": {
         "type": "git",
         "url": "https://github.com/takamin/list-it"
@@ -14,7 +14,7 @@
     "scripts": {
         "test": "node ./test/test.js"
     },
-    "keywords": [ "text", "format", "cli", "array" ],
+    "keywords": [ "console", "pre", "text", "column", "table", "format", "cli" ],
     "author": "Koji Takami",
     "license": "MIT"
 }
