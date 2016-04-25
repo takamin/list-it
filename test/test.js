@@ -4,6 +4,24 @@
     var chai = require('chai');
     var should = chai.should();
     var assert = chai.assert;
+    var ansi = require('ansi-escape-sequences');
+    var style = {};
+    var fg = {};
+    var bg = {};
+    Object.keys(ansi.style).forEach(function(key) {
+        var value = ansi.style[key];
+        if(/^bg-/.test(key)) {
+            bg[key.substr(3)] = value;
+        } else {
+            fg[key] = value;
+        }
+    });
+    Object.keys(fg).forEach(function(key) {
+        if( !(key in bg) ) {
+            style[key] = fg[key];
+            delete fg[key];
+        }
+    });
     var col = 0;
     var logbuf = listit.buffer();
     process.on("exit", function() {
@@ -15,16 +33,25 @@
         func();
         titles = titles.slice(0, titles.length - 1);
     }
+    function styled(message, styles) {
+        var args = Array.apply(null, arguments);
+        styles = args.slice(1);
+        styles.push(message, ansi.style.reset);
+        return styles.join('');
+    }
     function it(name, test) {
         logbuf.d(titles.join(" ") + " " + name);
         try {
             test();
-            logbuf.d("OK");
+            logbuf.d(styled(" PASS ",
+                        bg.green, fg.white));
             logbuf.nl();
         } catch(ex) {
-            logbuf.d("FAIL");
+            logbuf.d(styled(" FAIL ",
+                        bg.red, fg.white, style.bold));
             logbuf.nl();
             test();
+            console.error(ex);
         }
     }
     describe("listit.buffer", function() {
@@ -223,7 +250,7 @@
                         "C 333.3 D   -4.444");
                 });
             });
-            describe("bidimentional data", function() {
+            describe("bidimensional data", function() {
                 it("no autoAlign", function() {
                     var buffer = new listit.buffer();
                     buffer.d([
@@ -244,6 +271,21 @@
                         "A  11.0 B 2222.0  \n" +
                         "C 333.3 D   -4.444");
                 });
+            });
+        });
+    });
+    describe("Do not count escape sequences for column width,", function() {
+        Object.keys(ansi.style).forEach(function(key) {
+            var style = ansi.style[key];
+            it("style " + key + "#1", function() {
+                var buffer = new listit.buffer();
+                buffer.d([ styled("A", style), "B" ], ["C", "D"]);
+                assert.equal(buffer.toString(), styled("A", style) + " B\n" + "C D");
+            });
+            it("style " + key + "#2", function() {
+                var buffer = new listit.buffer();
+                buffer.d([ "A", styled("B", style) ], ["C", "D"]);
+                assert.equal(buffer.toString(), "A " + styled("B", style) + "\n" + "C D");
             });
         });
     });
