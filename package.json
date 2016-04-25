@@ -18,6 +18,7 @@
     "author": "Koji Takami",
     "license": "MIT",
     "devDependencies": {
+        "ansi-escape-sequences": "^2.2.2",
          "chai": "^3.5.0"
     }
 }
