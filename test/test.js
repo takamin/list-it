@@ -250,7 +250,7 @@
                         "C 333.3 D   -4.444");
                 });
             });
-            describe("bidimentional data", function() {
+            describe("bidimensional data", function() {
                 it("no autoAlign", function() {
                     var buffer = new listit.buffer();
                     buffer.d([
@@ -271,6 +271,21 @@
                         "A  11.0 B 2222.0  \n" +
                         "C 333.3 D   -4.444");
                 });
+            });
+        });
+    });
+    describe("Do not count escape sequences for column width,", function() {
+        Object.keys(ansi.style).forEach(function(key) {
+            var style = ansi.style[key];
+            it("style " + key + "#1", function() {
+                var buffer = new listit.buffer();
+                buffer.d([ styled("A", style), "B" ], ["C", "D"]);
+                assert.equal(buffer.toString(), styled("A", style) + " B\n" + "C D");
+            });
+            it("style " + key + "#2", function() {
+                var buffer = new listit.buffer();
+                buffer.d([ "A", styled("B", style) ], ["C", "D"]);
+                assert.equal(buffer.toString(), "A " + styled("B", style) + "\n" + "C D");
             });
         });
     });

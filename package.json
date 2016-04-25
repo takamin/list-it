@@ -1,24 +1,34 @@
 {
-    "name": "list-it",
-    "version": "0.3.0",
-    "description":
-        "This module is used to create a preformatted text table.",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/takamin/list-it"
-	},
-    "directories": {
-        "lib": "./lib"
-    },
-    "main": "./lib/index.js",
-    "scripts": {
-        "test": "node ./test/test.js"
-    },
-    "keywords": [ "console", "pre", "text", "column", "table", "format", "cli" ],
-    "author": "Koji Takami",
-    "license": "MIT",
-    "devDependencies": {
-        "ansi-escape-sequences": "^2.2.2",
-         "chai": "^3.5.0"
-    }
+  "name": "list-it",
+  "version": "0.3.1",
+  "description": "This module is used to create a preformatted text table.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/takamin/list-it"
+  },
+  "directories": {
+    "lib": "./lib"
+  },
+  "main": "./lib/index.js",
+  "scripts": {
+    "test": "node ./test/test.js"
+  },
+  "keywords": [
+    "console",
+    "pre",
+    "text",
+    "column",
+    "table",
+    "format",
+    "cli"
+  ],
+  "author": "Koji Takami",
+  "license": "MIT",
+  "devDependencies": {
+    "ansi-escape-sequences": "^2.2.2",
+    "chai": "^3.5.0"
+  },
+  "dependencies": {
+    "ansi-escape-sequences": "^2.2.2"
+  }
 }
