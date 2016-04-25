@@ -67,7 +67,7 @@
                 buffer.nl();
                 buffer.d("DDDD").d("EEEEE").d("FFFFFF");
                 assert.equal(buffer.toString(),
-                    "A    BB    CCC   \n" + 
+                    "A    BB    CCC   \n" +
                     "DDDD EEEEE FFFFFF");
             });
         });
@@ -160,6 +160,90 @@
                         " -987.0  \n" +
                         "  987.0  \n" +
                         "-1250.125");
+            });
+        });
+    });
+    describe("put several data at a time", function() {
+        describe("multi-columns, no adding new-line", function() {
+            it("no autoAlign", function() {
+                var buffer = new listit.buffer();
+                buffer.d("A", "BB").d("CCC","DDDD").nl();
+                buffer.d("EEEEE").d("FFFFFF", "GGGGGGG", "HHHHHHHH");
+                assert.equal(buffer.toString(),
+                    "A     BB     CCC     DDDD    \n" +
+                    "EEEEE FFFFFF GGGGGGG HHHHHHHH");
+            });
+            it("autoAlign", function() {
+                var buffer = new listit.buffer({autoAlign:true});
+                buffer.d("A", 11).d("B", 2222).nl();
+                buffer.d("C", 333.3).d("D", -4.444);
+                assert.equal(buffer.toString(),
+                    "A  11.0 B 2222.0  \n" +
+                    "C 333.3 D   -4.444");
+            });
+        });
+        describe("one row", function() {
+            it("no autoAlign", function() {
+                var buffer = new listit.buffer();
+                buffer.d([ "A", "BB", "CCC","DDDD" ]);
+                buffer.d(["EEEEE", "FFFFFF", "GGGGGGG", "HHHHHHHH"]);
+                assert.equal(buffer.toString(),
+                    "A     BB     CCC     DDDD    \n" +
+                    "EEEEE FFFFFF GGGGGGG HHHHHHHH");
+            });
+            it("autoAlign", function() {
+                var buffer = new listit.buffer({autoAlign:true});
+                buffer.d([ "A", 11, "B", 2222]);
+                buffer.d([ "C", 333.3, "D", -4.444]);
+                assert.equal(buffer.toString(),
+                    "A  11.0 B 2222.0  \n" +
+                    "C 333.3 D   -4.444");
+            });
+        });
+        describe("multi row", function() {
+            describe("all arguments are array", function() {
+                it("no autoAlign", function() {
+                    var buffer = new listit.buffer();
+                    buffer.d(
+                        [ "A", "BB", "CCC","DDDD" ],
+                        ["EEEEE", "FFFFFF", "GGGGGGG", "HHHHHHHH"]
+                    );
+                    assert.equal(buffer.toString(),
+                        "A     BB     CCC     DDDD    \n" +
+                        "EEEEE FFFFFF GGGGGGG HHHHHHHH");
+                });
+                it("autoAlign", function() {
+                    var buffer = new listit.buffer({autoAlign:true});
+                    buffer.d(
+                        [ "A", 11, "B", 2222],
+                        [ "C", 333.3, "D", -4.444]
+                    );
+                    assert.equal(buffer.toString(),
+                        "A  11.0 B 2222.0  \n" +
+                        "C 333.3 D   -4.444");
+                });
+            });
+            describe("bidimentional data", function() {
+                it("no autoAlign", function() {
+                    var buffer = new listit.buffer();
+                    buffer.d([
+                        [ "A", "BB", "CCC","DDDD" ],
+                        ["EEEEE", "FFFFFF", "GGGGGGG", "HHHHHHHH"]
+                    ]);
+                    assert.equal(buffer.toString(),
+                        "A     BB     CCC     DDDD    \n" +
+                        "EEEEE FFFFFF GGGGGGG HHHHHHHH");
+                });
+                it("autoAlign", function() {
+                    var buffer = new listit.buffer({autoAlign:true});
+                    buffer.d([
+                        [ "A", 11, "B", 2222],
+                        [ "C", 333.3, "D", -4.444]
+                    ]);
+                    assert.equal(buffer.toString(),
+                        "A  11.0 B 2222.0  \n" +
+                        "C 333.3 D   -4.444");
+                });
             });
         });
     });
