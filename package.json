@@ -1,6 +1,6 @@
 {
   "name": "list-it",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "This module is used to create a preformatted text table.",
   "repository": {
     "type": "git",
