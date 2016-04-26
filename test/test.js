@@ -1,9 +1,11 @@
-(function() {
+(function(describe, it) {
     "use strict";
     var listit = require('../lib');
     var chai = require('chai');
     var should = chai.should();
     var assert = chai.assert;
+    
+    // Ansi escape sequences
     var ansi = require('ansi-escape-sequences');
     var style = {};
     var fg = {};
@@ -22,38 +24,49 @@
             delete fg[key];
         }
     });
-    var col = 0;
-    var logbuf = listit.buffer();
-    process.on("exit", function() {
-        console.error(logbuf.toString());
-    });
-    var titles = [];
-    function describe(name, func) {
-        titles.push(name);
-        func();
-        titles = titles.slice(0, titles.length - 1);
-    }
     function styled(message, styles) {
         var args = Array.apply(null, arguments);
         styles = args.slice(1);
         styles.push(message, ansi.style.reset);
         return styles.join('');
     }
-    function it(name, test) {
-        logbuf.d(titles.join(" ") + " " + name);
-        try {
-            test();
-            logbuf.d(styled(" PASS ",
-                        bg.green, fg.white));
-            logbuf.nl();
-        } catch(ex) {
-            logbuf.d(styled(" FAIL ",
-                        bg.red, fg.white, style.bold));
-            logbuf.nl();
-            test();
-            console.error(ex);
+
+    // Alternate Mocha
+    if(!describe && !it) {
+        var logbuf = listit.buffer();
+        var titles = [];
+        var pass = styled(" \u2713 ", fg.green);
+        var fail = styled(" \u2717 ", bg.red, fg.white, style.bold);
+        var indent = function() {
+            return "  " + "  ".repeat(titles.length);
+        };
+        var result = function(result, name) {
+            return indent() + result + " " + name;
+        };
+        describe = function (name, func) {
+            console.log(indent() + styled(name, style.bold));
+            titles.push(name);
+            func();
+            titles = titles.slice(0, titles.length - 1);
+        }
+        it = function (name, test) {
+            logbuf.d(titles.join(" ") + " " + name);
+            try {
+                test();
+                logbuf.d(pass);
+                logbuf.nl();
+                console.log(result(pass, name));
+            } catch(ex) {
+                logbuf.d(fail);
+                logbuf.nl();
+                console.log(result(fail, styled(name, fg.red, style.bold)));
+                test();
+                console.error(ex);
+            }
         }
     }
+
+    // Tests
     describe("listit.buffer", function() {
         describe("#constructor", function() {
             it('should return a blank string', function() {
@@ -289,4 +302,4 @@
             });
         });
     });
-}());
+}((typeof(describe) == "function") ? describe : false, (typeof(it) == "function") ? it : false));
