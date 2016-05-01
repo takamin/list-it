@@ -302,4 +302,21 @@
             });
         });
     });
+    describe("Measure a width of wide-chars correctly.", function() {
+        it("All Japanese", function() {
+            var buffer = new listit.buffer();
+            buffer
+                .d("1").d("寿司").d("酢とご飯とシーフード").d("健康的だ").nl()
+                .d("2").d("焼肉").d("日本のグリルされたお肉").d("ジューシー").nl()
+                .d("3").d("ラーメン").d("日本のスープに入った麺").d("大好き").nl()
+                .d("4").d("天ぷら").d("シーフードや野菜に衣をつけて揚げたもの").d("おいしー").nl()
+                .d("5").d("刺身").d("大変フレッシュな魚のスライス").d("食べてみて！あご落ちるぜ").nl();
+                assert.equal(buffer.toString(),
+                    "1 寿司     酢とご飯とシーフード                   健康的だ                \n" +
+                    "2 焼肉     日本のグリルされたお肉                 ジューシー              \n" +
+                    "3 ラーメン 日本のスープに入った麺                 大好き                  \n" +
+                    "4 天ぷら   シーフードや野菜に衣をつけて揚げたもの おいしー                \n" +
+                    "5 刺身     大変フレッシュな魚のスライス           食べてみて！あご落ちるぜ");
+        });
+    });
 }((typeof(describe) == "function") ? describe : false, (typeof(it) == "function") ? it : false));

@@ -12,6 +12,17 @@ You can put it to the console or a preformated text-file.
 
 When a autoAlign option is set, the numbers are aligned by its fraction point.
 
+CHANGES
+-------
+
+* v0.3.3 - Bug fix : Measure a width of wide-chars of east asian characters correctly
+by using the npm eastasianwidth.
+* v0.3.2 - Change Test : Support mocha to test.
+* v0.3.1 - Bug fix : Do not count escape sequences in data for column width.
+* v0.3.0 - Enhance : Several columns or rows can be added at a time.
+* v0.2.0 - Enhance : Auto align mode is available.
+* v0.1.0 - Initial release
+
 SAMPLE
 ------
 
@@ -90,6 +101,44 @@ SATURN       568.0     120536         687        9.0       35.5       10.7
 URANUS        86.8      51118        1271        8.7       21.3      -17.2
 NEPTUNE      102.0      49528        1638       11.0       23.5       16.1
 PLUTO          0.0146    2370        2095        0.7        1.3     -153.3
+```
+
+### East asian characters
+
+__japanese-foods-jp.js__
+
+```
+var listit = require("list-it");
+var buf = listit.buffer();
+console.log(
+    buf
+        .d("1").d("寿司")
+            .d("酢とご飯とシーフード")
+            .d("健康的だ").nl()
+        .d("2").d("焼肉")
+            .d("日本のグリルされたお肉")
+            .d("ジューシー").nl()
+        .d("3").d("ラーメン")
+            .d("日本のスープに入った麺")
+            .d("大好き").nl()
+        .d("4").d("天ぷら")
+            .d("シーフードや野菜に衣をつけて揚げたもの")
+            .d("おいしー").nl()
+        .d("5").d("刺身")
+            .d("大変フレッシュな魚のスライス")
+            .d("食べてみて！あご落ちるぜ").nl()
+        .toString());
+```
+
+outputs:
+
+```
+$ node sample/japanese-food-jp.js
+1 寿司     酢とご飯とシーフード                   健康的だ
+2 焼肉     日本のグリルされたお肉                 ジューシー
+3 ラーメン 日本のスープに入った麺                 大好き
+4 天ぷら   シーフードや野菜に衣をつけて揚げたもの おいしー
+5 刺身     大変フレッシュな魚のスライス           食べてみて！あご落ちるぜ
 ```
 
 
