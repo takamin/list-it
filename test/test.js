@@ -1,6 +1,10 @@
-(function(describe, it) {
+#!/bin/env node
+(function() {
     "use strict";
-    var listit = require('../lib');
+    var listit = require('../lib/index.js');
+    var msysMochaAlt = require("../lib/msys-mocha-alt");
+    var describe = msysMochaAlt.get_describe();
+    var it = msysMochaAlt.get_it();
     var chai = require('chai');
     var should = chai.should();
     var assert = chai.assert;
@@ -29,41 +33,6 @@
         styles = args.slice(1);
         styles.push(message, ansi.style.reset);
         return styles.join('');
-    }
-
-    // Alternate Mocha
-    if(!describe && !it) {
-        var logbuf = listit.buffer();
-        var titles = [];
-        var pass = styled(" \u2713 ", fg.green);
-        var fail = styled(" \u2717 ", bg.red, fg.white, style.bold);
-        var indent = function() {
-            return "  " + "  ".repeat(titles.length);
-        };
-        var result = function(result, name) {
-            return indent() + result + " " + name;
-        };
-        describe = function (name, func) {
-            console.log(indent() + styled(name, style.bold));
-            titles.push(name);
-            func();
-            titles = titles.slice(0, titles.length - 1);
-        }
-        it = function (name, test) {
-            logbuf.d(titles.join(" ") + " " + name);
-            try {
-                test();
-                logbuf.d(pass);
-                logbuf.nl();
-                console.log(result(pass, name));
-            } catch(ex) {
-                logbuf.d(fail);
-                logbuf.nl();
-                console.log(result(fail, styled(name, fg.red, style.bold)));
-                test();
-                console.error(ex);
-            }
-        }
     }
 
     // Tests
@@ -319,4 +288,4 @@
                     "5 刺身     大変フレッシュな魚のスライス           食べてみて！あご落ちるぜ");
         });
     });
-}((typeof(describe) == "function") ? describe : false, (typeof(it) == "function") ? it : false));
+}());
