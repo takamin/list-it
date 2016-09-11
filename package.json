@@ -1,6 +1,6 @@
 {
   "name": "list-it",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "This module is used to create a preformatted text table.",
   "repository": {
     "type": "git",
@@ -26,7 +26,8 @@
   "license": "MIT",
   "devDependencies": {
     "ansi-escape-sequences": "^2.2.2",
-    "chai": "^3.5.0"
+    "chai": "^3.5.0",
+    "minty-mocha": "^1.0.0"
   },
   "dependencies": {
     "ansi-escape-sequences": "^2.2.2",
