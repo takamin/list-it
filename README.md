@@ -15,6 +15,8 @@ When a autoAlign option is set, the numbers are aligned by its fraction point.
 CHANGES
 -------
 
+* v0.3.5 - Bug fix : Null data rendering.
+* v0.3.4 - Change for the testing.
 * v0.3.3 - Bug fix : Measure a width of wide-chars of east asian characters correctly
 by using the npm eastasianwidth.
 * v0.3.2 - Change Test : Support mocha to test.
