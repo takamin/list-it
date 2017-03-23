@@ -1,7 +1,7 @@
 {
   "name": "list-it",
-  "version": "0.3.5",
-  "description": "This module is used to create a preformatted text table.",
+  "version": "0.4.0",
+  "description": "Format the array to preformatted text table.",
   "repository": {
     "type": "git",
     "url": "https://github.com/takamin/list-it"

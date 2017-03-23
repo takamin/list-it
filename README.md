@@ -15,6 +15,7 @@ When a autoAlign option is set, the numbers are aligned by its fraction point.
 CHANGES
 -------
 
+* v0.4.0 - Enhance : Print object array using its keys as column name.
 * v0.3.5 - Bug fix : Null data rendering.
 * v0.3.4 - Change for the testing.
 * v0.3.3 - Bug fix : Measure a width of wide-chars of east asian characters correctly
@@ -28,7 +29,7 @@ by using the npm eastasianwidth.
 SAMPLE
 ------
 
-__japanese-foods.js__
+__[sample/japanese-food.js](sample/japanese-food.js)__
 
 ```
 var listit = require("list-it");
@@ -66,7 +67,7 @@ $ node sample/japanese-food.js
 
 ### autoAlign
 
-__planets.js__
+__[sample/planets.js](sample/planets.js)__
 
 ```
 var listit = require("list-it");
@@ -105,9 +106,57 @@ NEPTUNE      102.0      49528        1638       11.0       23.5       16.1
 PLUTO          0.0146    2370        2095        0.7        1.3     -153.3
 ```
 
+### Object Array
+
+__[sample/planets-obj.js](sample/planets-obj.js)__
+```
+var listit = require("list-it");
+var buf = listit.buffer({ "autoAlign" : true });
+var PLANETS = [
+    { name: "MERCURY", mass: 0.33, dia: 4879, dens: 5427,
+        grav: 3.7, escV: 4.3, rot: 1407.6 },
+    { name: "VENUS", mass: 4.87, dia: 12104, dens: 5243,
+        grav: 8.9, escV: 10.4, rot: -5832.5 },
+    { name: "EARTH", mass: 5.97, dia: 12756, dens: 5514,
+        grav: 9.8, escV: 11.2, rot: 23.9 },
+    { name: "MOON", mass: 0.0073, dia: 3475, dens: 3340,
+        grav: 1.6, escV: 2.4, rot: 655.7 },
+    { name: "MARS", mass: 0.642, dia: 6792, dens: 3933,
+        grav: 3.7, escV: 5.0, rot: 24.6 },
+    { name: "JUPITER", mass: 1898, dia: 142984, dens: 1326,
+        grav: 23.1, escV: 59.5, rot: 9.9 },
+    { name: "SATURN", mass: 568, dia: 120536,dens: 687,
+        grav: 9.0, escV: 35.5, rot: 10.7 },
+    { name: "URANUS", mass: 86.8, dia: 51118, dens: 1271,
+        grav: 8.7, escV: 21.3, rot: -17.2 },
+    { name: "NEPTUNE", mass: 102, dia: 49528, dens: 1638,
+        grav: 11.0, escV: 23.5, rot: 16.1 },
+    { name: "PLUTO", mass: 0.0146, dia: 2370, dens: 2095,
+        grav: 0.7, escV: 1.3, rot: -153.3 }
+];
+console.log( buf.d( PLANETS ).toString() );
+```
+
+outputs:
+
+```
+$ node sample/planets-obj.js
+name    mass      dia    dens grav escV rot
+MERCURY    0.33     4879 5427  3.7  4.3  1407.6
+VENUS      4.87    12104 5243  8.9 10.4 -5832.5
+EARTH      5.97    12756 5514  9.8 11.2    23.9
+MOON       0.0073   3475 3340  1.6  2.4   655.7
+MARS       0.642    6792 3933  3.7  5.0    24.6
+JUPITER 1898.0    142984 1326 23.1 59.5     9.9
+SATURN   568.0    120536  687  9.0 35.5    10.7
+URANUS    86.8     51118 1271  8.7 21.3   -17.2
+NEPTUNE  102.0     49528 1638 11.0 23.5    16.1
+PLUTO      0.0146   2370 2095  0.7  1.3  -153.3
+```
+
 ### East asian characters
 
-__japanese-foods-jp.js__
+__[sample/japanese-food-jp.js](sample/japanese-food-jp.js)__
 
 ```
 var listit = require("list-it");
