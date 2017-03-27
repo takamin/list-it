@@ -276,7 +276,7 @@ This method also returns `this` object.
 Returns preformatted text table.
 
 
-LICENCE
+LICENSE
 -------
 
 MIT
