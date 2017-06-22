@@ -1,11 +1,10 @@
 #!/bin/env node
 (function() {
     "use strict";
-    require("minty-mocha");
     var chai = require('chai');
     var should = chai.should();
     var assert = chai.assert;
-    var listit = require('../lib/index.js');
+    var listit = require('../index.js');
     
     // Ansi escape sequences
     var ansi = require('ansi-escape-sequences');

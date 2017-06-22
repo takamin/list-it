@@ -201,23 +201,30 @@
             this.width = width;
         }
     };
+    function spc(n) {
+        return (Array(n)).fill(" ").join("");
+    }
+    function padLeft(str,columns) {
+        var n = columns - str.length;
+        return (n <= 0) ? str : (spc(n) + str);
+    }
+    function padRight(str,columns) {
+        var n = columns - str.length;
+        return (n <= 0) ? str : str + spc(n);
+    }
+    function padRightForVisibleLength(str,columns) {
+        var n = columns - DataCell.visibleLength(str);
+        return (n <= 0) ? str : str + spc(n);
+    }
     Column.prototype.formatCell = function(cell) {
         var m = this.getWidth();
         var data = cell.getData();
         if(this.opt.autoAlign) {
             if(typeof(data) == "number") {
-                var s = this.makeAutoAlignNum(data);
-                while(s.length < m) {
-                    s = ' ' + s;
-                }
-                return s;
+                return padLeft(this.makeAutoAlignNum(data), m);
             }
         }
-        var s = "" + data;
-        while(DataCell.visibleLength(s) < m) {
-            s += ' ';
-        }
-        return s;
+        return padRightForVisibleLength("" + data, m);
     };
     Column.prototype.setAutoAlign = function(autoAlign) {
         this.opt.autoAlign = autoAlign;
@@ -241,25 +248,15 @@
         return width;
     };
     Column.prototype.makeAutoAlignNum = function(num) {
-        var s = "";
         var numInfo = this.analyzeNumber(num);
-        var intStr = numInfo.intStr;
-        var fracStr = numInfo.fracStr;
-        var pointPos = numInfo.pointPos;
-        while(intStr.length < this.intLen) {
-            intStr = " " + intStr;
-        }
-        while(fracStr.length < this.fracLen) {
-            fracStr = fracStr + " ";
-        }
-        if(pointPos >= 0) {
-            s = intStr + "." + fracStr;
+        var intStr = padLeft(numInfo.intStr, this.intLen);
+        var fracStr = padRight(numInfo.fracStr, this.fracLen);
+        if(numInfo.pointPos >= 0) {
+            return [intStr, ".", fracStr].join("");
         } else if(this.fracLen == 0) {
-            s = intStr;
-        } else {
-            s = intStr + ".0" + fracStr.substr(1);
+            return intStr;
         }
-        return s;
+        return [intStr, ".0", fracStr.substr(1)].join("");
     };
     Column.prototype.analyzeNumber = function(num) {
         var s = "" + num;
@@ -314,7 +311,7 @@
                 if(item[key] != null && typeof(item[key]) == 'object'
                     && item[key].constructor.name == 'Date')
                 {
-                    //日時情報はISO形式で表示
+                    //譌･譎よュ蝣ｱ縺ｯISO蠖｢蠑上〒陦ｨ遉ｺ
                     return item[key].toISOString();
                 }
                 return item[key];
