@@ -1,17 +1,15 @@
 {
   "name": "list-it",
-  "version": "0.4.0",
-  "description": "Format the array to preformatted text table.",
+  "version": "0.4.1",
+  "description": "Preformatted text table builder for console.",
   "repository": {
     "type": "git",
     "url": "https://github.com/takamin/list-it"
   },
-  "directories": {
-    "lib": "./lib"
-  },
-  "main": "./lib/index.js",
+  "homepage": "http://takamints.hatenablog.jp/entry/npm-list-it-preformatted-text-table-generator",
+  "main": "./index.js",
   "scripts": {
-    "test": "node ./test/test.js"
+    "test": "./node_modules/.bin/mocha"
   },
   "keywords": [
     "console",
@@ -25,9 +23,8 @@
   "author": "Koji Takami",
   "license": "MIT",
   "devDependencies": {
-    "ansi-escape-sequences": "^2.2.2",
     "chai": "^3.5.0",
-    "minty-mocha": "^1.0.0"
+    "mocha": "^3.4.2"
   },
   "dependencies": {
     "ansi-escape-sequences": "^2.2.2",
