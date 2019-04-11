@@ -24,7 +24,7 @@
   "license": "MIT",
   "devDependencies": {
     "chai": "^3.5.0",
-    "mocha": "^6.0.1"
+    "mocha": "^6.1.2"
   },
   "dependencies": {
     "ansi-escape-sequences": "^2.2.2",

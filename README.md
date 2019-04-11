@@ -32,8 +32,8 @@ SAMPLE
 __[sample/japanese-food.js](sample/japanese-food.js)__
 
 ```
-var listit = require("list-it");
-var buf = listit.buffer();
+var ListIt = require("list-it");
+var buf = new ListIt();
 console.log(
     buf
         .d("1").d("Sushi")
@@ -70,8 +70,8 @@ $ node sample/japanese-food.js
 __[sample/planets.js](sample/planets.js)__
 
 ```
-var listit = require("list-it");
-var buf = listit.buffer({ "autoAlign" : true });
+var ListIt = require("list-it");
+var buf = new ListIt({ "autoAlign" : true });
 var PLANETS = [
     ["NAME", "Mass(10^24kg)", "Dia(km)", "Dens(kg/m3)",
                         "Grav(m/s2)", "EscV(km/s)", "Rot(hours)" ],
@@ -110,8 +110,8 @@ PLUTO          0.0146    2370        2095        0.7        1.3     -153.3
 
 __[sample/planets-obj.js](sample/planets-obj.js)__
 ```
-var listit = require("list-it");
-var buf = listit.buffer({ "autoAlign" : true });
+var ListIt = require("list-it");
+var buf = new ListIt({ "autoAlign" : true });
 var PLANETS = [
     { name: "MERCURY", mass: 0.33, dia: 4879, dens: 5427,
         grav: 3.7, escV: 4.3, rot: 1407.6 },
@@ -159,8 +159,8 @@ PLUTO      0.0146   2370 2095  0.7  1.3  -153.3
 __[sample/japanese-food-jp.js](sample/japanese-food-jp.js)__
 
 ```
-var listit = require("list-it");
-var buf = listit.buffer();
+var ListIt = require("list-it");
+var buf = new ListIt();
 console.log(
     buf
         .d("1").d("寿司")
@@ -193,16 +193,17 @@ $ node sample/japanese-food-jp.js
 ```
 
 
-METHODS
--------
 
-### buffer(opt)
+API
+---
 
-Creates a `ListItBuffer` instance and returns it.
+### class ListIt(opt)
+
+Creates a `ListIt` instance.
 
 The instance has current row that is a position for the columns to be added.
 
-You cannot edit the columns and rows that were already added.
+You cannot edit the columns and rows that were already added using `d(...)` method.
 
 See the examples below.
 
@@ -213,14 +214,14 @@ When this is set true, the data in cell will be aligned in automatic depending o
 The number will be aligned to the right taking account of its decimal point.
 
 * Type : boolean
-* Default setting : false
+* Default setting : true
 
-### ListItBuffer.d( data [, data ...] )
+### ListIt#d( data [, data ...] )
 
 This method adds one or more columns or rows at a time depending on
 the parameter data type.
 
-This method returns `this` object. So you can chain a method call.
+This method returns `this` object. So you can chain to call a next method.
 
 #### How to add column(s)
 
@@ -265,13 +266,13 @@ EQUIVALENT CODE: buffer.d([ [1,2,3], [4,5,6] ]);
 ```
 
 
-### ListItBuffer.nl()
+### ListIt#nl()
 
 Ends up a process for the current row.
 
 This method also returns `this` object.
 
-### ListItBuffer.toString()
+### ListIt#toString()
 
 Returns preformatted text table.
 
