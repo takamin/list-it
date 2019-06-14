@@ -1,6 +1,8 @@
 list-it - Fixed Column Text Table Formatter
 ===========================================
 
+[![Build Status](https://travis-ci.org/takamin/list-it.svg?branch=master)](https://travis-ci.org/takamin/list-it)
+
 DESCRIPTION
 -----------
 
