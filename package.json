@@ -1,6 +1,6 @@
 {
   "name": "list-it",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Preformatted text table builder for console.",
   "repository": {
     "type": "git",
