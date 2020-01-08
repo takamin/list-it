@@ -1,5 +1,5 @@
-"use strict";
-const ListItBuffer = require("./lib/list-it-buffer.js");
+'use strict';
+const ListItBuffer = require('./lib/list-it-buffer.js');
 
 /**
  * ListIt constructor.
@@ -18,11 +18,17 @@ const ListItBuffer = require("./lib/list-it-buffer.js");
  *      default: true
  * ```
  *
+ * ```
+ * maxLength: Maximum character lenght of a value.
+ *      type: number
+ *      default: 'none'
+ * ```
+ *
  * @constructor
  * @param {object} opt option
  */
 function ListIt(opt) {
-    ListItBuffer.call(this, opt);
+  ListItBuffer.call(this, opt);
 }
 
 ListIt.prototype = new ListItBuffer();
@@ -36,11 +42,11 @@ ListIt.prototype = new ListItBuffer();
  * @param {object} opt option
  * @returns {ListIt} A ListIt instance
  */
-ListIt.buffer = function (opt) {
-    opt = opt || {};
-    if(!("autoAlign" in opt)) {
-        opt.autoAlign = false;
-    }
-    return new ListIt(opt);
+ListIt.buffer = function(opt) {
+  opt = opt || {};
+  if (!('autoAlign' in opt)) {
+    opt.autoAlign = false;
+  }
+  return new ListIt(opt);
 };
 module.exports = ListIt;
