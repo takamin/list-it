@@ -14,20 +14,6 @@ You can put it to the console or a preformated text-file.
 
 When a autoAlign option is set, the numbers are aligned by its fraction point.
 
-CHANGES
--------
-
-* v0.4.0 - Enhance : Print object array using its keys as column name.
-* v0.3.5 - Bug fix : Null data rendering.
-* v0.3.4 - Change for the testing.
-* v0.3.3 - Bug fix : Measure a width of wide-chars of east asian characters correctly
-by using the npm eastasianwidth.
-* v0.3.2 - Change Test : Support mocha to test.
-* v0.3.1 - Bug fix : Do not count escape sequences in data for column width.
-* v0.3.0 - Enhance : Several columns or rows can be added at a time.
-* v0.2.0 - Enhance : Auto align mode is available.
-* v0.1.0 - Initial release
-
 SAMPLE
 ------
 
