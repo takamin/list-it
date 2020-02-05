@@ -15,6 +15,17 @@ module.exports = {
     },
     "rules": {
         "no-unused-vars": "warn",
-        "no-control-regex": "off",
+        "indent": [
+            "error",
+            4
+        ],
+        "quotes": [
+            "error",
+            "double"
+        ],
+        "semi": [
+            "error",
+            "always"
+        ]
     }
 };
