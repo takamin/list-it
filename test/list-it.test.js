@@ -27,5 +27,15 @@ describe("ListIt", () => {
                 "12  12.3 111\n" +
                 "123 1.23 0  ");
         });
+        it("should format an array of object", () => {
+            const listit = ListIt.buffer();
+            assert.equal(listit.d([
+                {"A": 0, "B": 2},
+                {"A": 0.1, "B": 2.34},
+            ]).toString(),
+                "A   B   \n" +
+                "0   2   \n" +
+                "0.1 2.34");
+        });
     });
 });
