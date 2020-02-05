@@ -10,6 +10,7 @@
   "main": "./index.js",
   "scripts": {
     "lint": "eslint .",
+    "watch": "npm test -- --watch",
     "test": "eslint . && mocha"
   },
   "keywords": [
