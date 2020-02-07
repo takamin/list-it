@@ -8,11 +8,9 @@ DESCRIPTION
 
 This module is used to create a preformatted text table.
 
-Each columns in all rows are aligned in vertical.
-
-You can put it to the console or a preformated text-file.
-
-When a autoAlign option is set, the numbers are aligned by its fraction point.
+* Each columns are aligned in vertical.
+* All number data could be aligned by its fraction point with `autoAlign` option.
+* Longer text could be truncated with `setColumnWidth`
 
 SAMPLE
 ------
@@ -203,6 +201,9 @@ The number will be aligned to the right taking account of its decimal point.
 
 * Type : boolean
 * Default setting : true
+
+#### ListIt#setColumnWidth(indexOfColumns, width)
+
 
 ### ListIt#d( data [, data ...] )
 

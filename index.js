@@ -2,24 +2,20 @@
 const ListItBuffer = require("./lib/list-it-buffer.js");
 
 /**
+ * @typedef {object} ListItOption
+ * @property {boolean} autoAlign - Align number vertical with its decimal point.
+ */
+
+/**
  * ListIt constructor.
  *
- * ```javascript
+ * @class
+ * @param {ListItOption|null} opt An option to create.
+ * @example <caption>Create instace</caption>
  * const ListIt = require("list-it");
- *
  * const listit = new ListIt({ autoAlign: true });
- * ```
- *
- * OPTIONS:
- *
- * ```
- * autoAlign: Align number data to the right or its decimal point.
- *      type: boolean
- *      default: true
- * ```
- *
- * @constructor
- * @param {object} opt option
+ * @description
+ * In default, the `autoAlign` of option is true.
  */
 function ListIt(opt) {
     ListItBuffer.call(this, opt);
