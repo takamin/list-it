@@ -20,6 +20,9 @@ __[sample/japanese-food.js](sample/japanese-food.js)__
 ```
 var ListIt = require("list-it");
 var buf = new ListIt();
+buf.setColumnWidth(1, 5);
+buf.setColumnWidth(2, 15);
+buf.setColumnWidth(3, 7);
 console.log(
     buf
         .d("1").d("Sushi")
@@ -44,11 +47,11 @@ outputs:
 
 ```
 $ node sample/japanese-food.js
-1 Sushi    vinegared rice combined raw seafood Healthy
-2 Yakiniku Grilled meat on Japanese            Juicy
-3 Ramen    Japanese noodle soup dish           I like it
-4 Tempura  Deep fried seafood or vegetables    Delicious
-5 Sashimi  Very fresh sliced fish              Try it now, It's good
+1 Sushi vinegared rice  Healthy
+2 Yakin Grilled meat on Juicy
+3 Ramen Japanese noodle I like
+4 Tempu Deep fried seaf Delicio
+5 Sashi Very fresh slic Try it
 ```
 
 ### autoAlign
@@ -202,8 +205,19 @@ The number will be aligned to the right taking account of its decimal point.
 * Type : boolean
 * Default setting : true
 
-#### ListIt#setColumnWidth(indexOfColumns, width)
+#### ListIt#setColumnWidth(indexOfColumns:number, width:number)
 
+Set the column width by text length.
+
+The actual width is calculated by traversing all data in a column.
+A number data never be affected, because it should not be truncated.
+So it may be longer than the specified length when some number data
+exist in a column.
+
+**PARAMETERS**
+
+1. `indexOfColumns` - a column index to set.
+2. `width` - a character length of the column.
 
 ### ListIt#d( data [, data ...] )
 

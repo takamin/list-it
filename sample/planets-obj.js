@@ -1,4 +1,4 @@
-var listit = require("../lib");
+var listit = require("../index.js");
 var buf = listit.buffer({ "autoAlign" : true });
 var PLANETS = [
     { name: "MERCURY", mass: 0.33, dia: 4879, dens: 5427, grav: 3.7, escV: 4.3, rot: 1407.6 },

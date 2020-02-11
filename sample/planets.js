@@ -1,4 +1,4 @@
-var listit = require("../lib");
+var listit = require("../index.js");
 var buf = listit.buffer({ "autoAlign" : true });
 var PLANETS = [
     ["NAME", "Mass(10^24kg)", "Dia(km)", "Dens(kg/m3)",

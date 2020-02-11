@@ -1,4 +1,4 @@
-var listit = require("../lib");
+var listit = require("../index.js");
 var buf = listit.buffer();
 console.log(
     buf

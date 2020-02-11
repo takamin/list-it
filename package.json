@@ -1,7 +1,7 @@
 {
   "name": "list-it",
-  "version": "1.0.6",
-  "description": "Preformatted text table builder for console.",
+  "version": "1.1.0",
+  "description": "Preformatted text table builder.",
   "repository": {
     "type": "git",
     "url": "https://github.com/takamin/list-it"
@@ -15,12 +15,11 @@
     "test": "eslint . && mocha"
   },
   "keywords": [
-    "console",
-    "pre",
+    "preformatted",
     "text",
     "column",
     "table",
-    "format",
+    "console",
     "cli"
   ],
   "author": "Koji Takami",

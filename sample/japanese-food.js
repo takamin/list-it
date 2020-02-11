@@ -1,5 +1,8 @@
-var listit = require("../lib");
-var buf = listit.buffer();
+const ListIt = require("../index.js");
+const buf = new ListIt();
+buf.setColumnWidth(1, 5);
+buf.setColumnWidth(2, 15);
+buf.setColumnWidth(3, 7);
 console.log(
     buf
         .d("1").d("Sushi")
