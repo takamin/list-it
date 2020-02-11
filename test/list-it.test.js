@@ -38,4 +38,46 @@ describe("ListIt", () => {
                 "0.1 2.34");
         });
     });
+    describe(".setColumnWidth", ()=>{
+        it("should truncate the texts with the width", ()=>{
+            const listit = new ListIt();
+            listit.d([
+                ["ABCDEFG", "OPQRSTU"],
+                ["HIJKLMN", "VWXYZ"],
+            ]).setColumnWidth(0, 3);
+            assert.equal(listit.toString(),
+                "ABC OPQRSTU\n" +
+                "HIJ VWXYZ  ");
+        });
+        it("should truncate the texts even if it represents number", ()=>{
+            const listit = new ListIt();
+            listit.d([
+                ["123456", "123456"],
+                ["123456", "123456"],
+            ]).setColumnWidth(1, 3);
+            assert.equal(listit.toString(),
+                "123456 123\n" +
+                "123456 123");
+        });
+        it("should not affect when a text converted from number data which is longer than the specified length exists in column", ()=>{
+            const listit = new ListIt();
+            listit.d([
+                ["ABCDEFGOPQRSTU", 1.2],
+                [123.456, "VWXYZ"],
+            ]).setColumnWidth(0, 3);
+            assert.equal(listit.toString(),
+                "ABCDEFG   1.2\n" +
+                "123.456 VWXYZ");
+        });
+        it("should not affect when all the text is shorter than the specified length", ()=>{
+            const listit = new ListIt();
+            listit.d([
+                ["ABCDEFGOPQRSTU", 1.2],
+                [123.456, "VWXYZ"],
+            ]).setColumnWidth(1, 6);
+            assert.equal(listit.toString(),
+                "ABCDEFGOPQRSTU   1.2\n" +
+                "       123.456 VWXYZ");
+        });
+    });
 });
