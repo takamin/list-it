@@ -1,6 +1,19 @@
 CHANGES
 ====
 
+v1.2
+----
+
+* Add an option `columnWidthAll`.
+* Change a method `setColumnWidth`.
+* Add a method `setColumnWidthAll`.
+* Add a method `getColumnWidth` (NO TEST).
+
+v1.1
+----
+
+* Add a method `setColumnWidth`.
+
 v1.0
 ----
 
