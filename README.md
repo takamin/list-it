@@ -205,6 +205,24 @@ The number will be aligned to the right taking account of its decimal point.
 * Type : boolean
 * Default setting : true
 
+#### opt.columnWidth
+
+Declare text width for columns by character length (or remove).
+
+* Type : Array<number>|number|null
+* Default: null
+
+**For Each Columns**
+
+An array of numbers could be specified.
+Its each elements are set to the column at that position.
+A `null` as the element value means that width will not be specified.
+
+**For All Columns**
+
+If a single number is specified for this option, It will set to all columns.
+And also when the value is null, column width is not declared at all.
+
 #### ListIt#setColumnWidth(indexOfColumns:number, width:number)
 
 Set the column width by text length.
@@ -214,10 +232,27 @@ A number data never be affected, because it should not be truncated.
 So it may be longer than the specified length when some number data
 exist in a column.
 
-**PARAMETERS**
+PARAMETERS:
 
 1. `indexOfColumns` - a column index to set.
 2. `width` - a character length of the column.
+    If `null` is specified, the declaration is removed.
+
+RETURN VALUE:
+
+This method returns `this` instance to chain the next method call.
+
+#### ListIt#setColumnWidthAll(widthForAll:Array<number|null>|number|null)
+
+Set the whole column's width. See opt.columnWidth
+
+PARAMETERS:
+
+1. `widthForAll` - An array of widtha.
+
+RETURN VALUE:
+
+This method returns `this` instance to chain the next method call.
 
 ### ListIt#d( data [, data ...] )
 

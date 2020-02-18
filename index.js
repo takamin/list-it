@@ -4,6 +4,7 @@ const ListItBuffer = require("./lib/list-it-buffer.js");
 /**
  * @typedef {object} ListItOption
  * @property {boolean} autoAlign - Align number vertical with its decimal point.
+ * @property {Array<number>|number|null} columnWidth - Column width by character length.
  */
 
 /**
