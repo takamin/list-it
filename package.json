@@ -7,6 +7,9 @@
     "url": "https://github.com/takamin/list-it"
   },
   "homepage": "http://takamints.hatenablog.jp/entry/npm-list-it-preformatted-text-table-generator",
+  "bin": {
+    "listit": "bin/listit.js"
+  },
   "main": "./index.js",
   "scripts": {
     "lint": "eslint .",
@@ -29,10 +32,14 @@
     "eslint": "^6.8.0",
     "eslint-plugin-jsdoc": "^21.0.0",
     "eslint-watch": "^6.0.1",
-    "mocha": "^7.0.1"
+    "mocha": "^7.0.1",
+    "term-size": "^2.1.1"
   },
   "dependencies": {
     "ansi-escape-sequences": "^5.1.2",
-    "eastasianwidth": "^0.2.0"
+    "eastasianwidth": "^0.2.0",
+    "debug": "^4.1.1",
+    "hash-arg": "^0.3.5",
+    "node-getopt": "^0.3.2"
   }
 }
