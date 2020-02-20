@@ -9,6 +9,7 @@
   "homepage": "http://takamints.hatenablog.jp/entry/npm-list-it-preformatted-text-table-generator",
   "main": "./index.js",
   "scripts": {
+    "coverage": "nyc --reporter=html --reporter=text mocha",
     "lint": "eslint .",
     "lint-watch": "npx eslint-watch --watch",
     "mocha-watch": "mocha -- --watch",
@@ -29,7 +30,8 @@
     "eslint": "^6.8.0",
     "eslint-plugin-jsdoc": "^21.0.0",
     "eslint-watch": "^6.0.1",
-    "mocha": "^7.0.1"
+    "mocha": "^7.0.1",
+    "nyc": "^15.0.0"
   },
   "dependencies": {
     "ansi-escape-sequences": "^5.1.2",
