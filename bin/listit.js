@@ -33,15 +33,17 @@ const OPTIONS = [
 ];
 
 const debug = require("debug")("listit");
+const EastAsianStringWidth = require("eastasianwidth");
 const fs = require("fs");
 const Getopt = require("node-getopt").create(OPTIONS).bindHelp(USAGE);
 const HashArg = require("hash-arg");
 const ListIt = require("../index.js");
 const readline = require("readline");
+const TermSize = require("term-size");
 
-const readFile = inputFilename => {
+const readFile = filename => {
     return new Promise((resolve, reject)=>{
-        fs.readFile(inputFilename, (err, data) => {
+        fs.readFile(filename, (err, data) => {
             if(err) {
                 reject(err);
             } else {
@@ -50,75 +52,148 @@ const readFile = inputFilename => {
         });
     });
 };
+
 const readStdin = () => {
     return new Promise((resolve, reject)=>{
         try {
-            const rl = readline.createInterface({ input: process.stdin });
             const inputLines = [];
-            rl.on("line", line => { inputLines.push(line); });
-            rl.on("close", ()=>{
-                const json = inputLines.join("\r\n");
-                resolve(json);
-            });
+            const stdin = readline.createInterface({ input: process.stdin });
+            stdin.on("line", line => inputLines.push(line));
+            stdin.on("close", () => resolve(inputLines.join("\r\n")));
         } catch (err) {
             reject(err);
         }
     });
 };
 
-const readInput = async inputFilename => {
-    if(inputFilename) {
-        return await readFile(inputFilename);
+const readInput = filename => {
+    if(filename) {
+        return readFile(filename);
     }
-    return await readStdin();
+    return readStdin();
 };
 
 const _createList = (resultBuffer, inputData, name) => {
     if(Array.isArray(inputData)) {
         const listit = new ListIt({});
-        resultBuffer.push({
-            name, type: "list",
-            list: listit.d(inputData),
-        });
-        return;
+        resultBuffer.push({ name, type: "list", list: listit.d(inputData) });
+    } else if(typeof inputData === "object") {
+        Object.keys(inputData).forEach(key => _createList(
+            resultBuffer, inputData[key], `${name}.${key}`));
+    } else {
+        resultBuffer.push({ name, type: "value", value: inputData });
     }
-    if(typeof inputData === "object") {
-        Object.keys(inputData).forEach(
-            key => _createList(
-                resultBuffer, inputData[key], `${name}.${key}`
-            )
-        );
-        return;
-    }
-    resultBuffer.push({ name, type: "value", value: inputData });
 };
-const createList = (inputData) => {
+
+const createList = inputData => {
     const resultBuffer = [];
     _createList(resultBuffer, inputData, "$");
     return resultBuffer;
 };
-(async () => {
-    const termSize = require("term-size");
-    debug(`term-size: ${JSON.stringify(termSize())}`);
 
-    const { options, argv } = Getopt.parseSystem();
-    debug(`options:${JSON.stringify(options, null, 2)}`);
-
-    if(options.version) {
-        console.log(`${version}`);
-        process.exit(1);
+const eastAsianSubstring = (s, start, end) => {
+    let chStart = 0;
+    let chEnd = 0;
+    let count = 0;
+    for(let c of s) {
+        count += EastAsianStringWidth.length(c);
+        if(count < start) {
+            chStart++;
+        }
+        if(end == null || count < end) {
+            chEnd++;
+        }
     }
+    return s.substring(chStart, chEnd);
+};
 
-    const { inputFilename } = HashArg.get(PARAMETERS, argv);
-    debug(`inputFilename:${inputFilename}`);
+class EastAsianLineBuffer {
+    constructor() {
+        this._lines = [];
+    }
+    push(data) {
+        data.split(/\r{0,1}\n/).forEach(
+            line => this._lines.push(line));
+    }
+    toString(offset, width) {
+        offset = offset || 0;
+        width = width || 0;
+        return this._lines.map(line=>{
+            if(line.length < offset) {
+                return "";
+            } else if(width == 0 || line.length < offset + width) {
+                return eastAsianSubstring(line, offset);
+            } else {
+                return eastAsianSubstring(line, offset, offset + width);
+            }
+        }).join("\r\n");
+    }
+}
 
-    const inputData = JSON.parse(await readInput(inputFilename));
-    debug(JSON.stringify(inputData, null, 2));
-
-    const result = createList(inputData);
-    result.forEach( data => {
-        console.log("");
-        console.log(`[${data.name}]:`);
-        console.log(`${data[data.type].toString()}`);
+const ChildProcess = require("child_process");
+const exec = command => {
+    return new Promise((resolve, reject) => {
+        ChildProcess.exec(command, (err, stdout, stderr) => {
+            if(err) {
+                err.message = `${err.message}(stderr:${stderr})`;
+                reject(err);
+            } else {
+                resolve(stdout);
+            }
+        });
     });
+};
+
+const getTermSize = async () => {
+    //try {
+    //    debug("Try tput to get terminal size.");
+    //    return {
+    //        columns: parseInt(await exec("tput cols")),
+    //        rows: parseInt(await exec("tput lines")),
+    //    }
+    //} catch(err) {
+    //    debug(`Error: ${err.message}`);
+    //    debug("Try term-size to get terminal size.");
+    try {
+        return TermSize();
+    } catch(err) {
+        debug(`Error: ${err.message}`);
+        return null;
+    }
+    //}
+};
+
+(async () => {
+    try {
+        const { options, argv } = Getopt.parseSystem();
+        debug(`options:${JSON.stringify(options, null, 2)}`);
+
+        if(options.version) {
+            console.log(`${version}`);
+            process.exit(1);
+        }
+
+        const { inputFilename } = HashArg.get(PARAMETERS, argv);
+        debug(`inputFilename:${inputFilename}`);
+
+        const inputData = JSON.parse(await readInput(inputFilename));
+        debug(JSON.stringify(inputData, null, 2));
+
+        const result = createList(inputData);
+        const lineBuffer = new EastAsianLineBuffer();
+        result.forEach( data => {
+            lineBuffer.push("");
+            lineBuffer.push(`[${data.name}]:`);
+            lineBuffer.push(`${data[data.type].toString()}`);
+        });
+        const termSize = await getTermSize();
+        if(termSize) {
+            debug(`termSize: ${JSON.stringify(termSize)}`);
+            console.log(lineBuffer.toString(0, termSize.columns));
+        } else {
+            console.log(lineBuffer.toString());
+        }
+    } catch(err) {
+        console.error(`Error: ${err.message}`);
+    }
 })();
