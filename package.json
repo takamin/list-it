@@ -14,7 +14,7 @@
     "lint": "eslint .",
     "lint-watch": "npx eslint-watch --watch",
     "mocha-watch": "mocha -- --watch",
-    "test": "eslint . && mocha"
+    "test": "eslint . && nyc mocha"
   },
   "keywords": [
     "preformatted",
