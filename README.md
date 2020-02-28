@@ -6,14 +6,74 @@ list-it - Fixed Column Text Table Formatter
 DESCRIPTION
 -----------
 
-This module is used to create a preformatted text table.
+This module creates a text table string.
+And offers a cli command `listit` that print arrays in a json file to console
+as a table.
 
 * Each columns are aligned in vertical.
-* All number data could be aligned by its fraction point with `autoAlign` option.
-* Longer text could be truncated with `setColumnWidth`
+* All number data in column are aligned by its fraction point with `autoAlign` option.
+* Longer text can be truncated with `setColumnWidth` option.
 
-SAMPLE
-------
+CLI Command `listit`
+--------------------
+
+### INSTALL
+
+Install with npm.
+
+```bash
+$ npm install --global list-it
+```
+
+### USAGE
+
+```bash
+$ listit --help
+Usage: listit [input-filename] [OPTIONS]
+
+Outputs the array included in JSON to the console in tabular format.
+Non-array data is displayed as is.
+
+OPTIONS:
+  -h, --help    Print this help message
+  -v, --version Print the version of this package
+
+----
+This command is included in the npm list-it@1.2.0
+
+Repository: https://github.com/takamin/list-it
+Homepage: http://takamints.hatenablog.jp/entry/npm-list-it-preformatted-text-table-generator
+
+Copyright (c) 2020 Koji Takami
+This software is released under the MIT License
+```
+
+### SAMPLE
+
+The `listit` would print all data in the JSON file with its property name.
+In following example, `$` means root oject.
+
+```bash
+$ listit ./sample/planets.json
+
+[$]:
+name    mass      dia    dens grav escV rot
+MERCURY    0.33     4879 5427  3.7  4.3  1407.6
+VENUS      4.87    12104 5243  8.9 10.4 -5832.5
+EARTH      5.97    12756 5514  9.8 11.2    23.9
+MOON       0.0073   3475 3340  1.6  2.4   655.7
+MARS       0.642    6792 3933  3.7  5.0    24.6
+JUPITER 1898.0    142984 1326 23.1 59.5     9.9
+SATURN   568.0    120536  687  9.0 35.5    10.7
+URANUS    86.8     51118 1271  8.7 21.3   -17.2
+NEPTUNE  102.0     49528 1638 11.0 23.5    16.1
+PLUTO      0.0146   2370 2095  0.7  1.3  -153.3
+
+```
+
+
+PROGRAMMING SAMPLE
+------------------
 
 __[sample/japanese-food.js](sample/japanese-food.js)__
 
