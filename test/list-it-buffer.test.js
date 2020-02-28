@@ -182,4 +182,44 @@ describe("ListItBuffer", () => {
             });
         });
     });
+    describe("#setHeaderRow", ()=>{
+        it("should set column header row", ()=>{
+            const listit = new ListItBuffer();
+            listit.d([1,2,3]);
+            listit.setHeaderRow(["VWXYZ", "ABCD", "EFG"]);
+            assert.equal(listit.toString(), [
+                "VWXYZ ABCD EFG",
+                "    1    2   3",
+            ].join("\n"));
+        });
+        it("should override which specified by the option", ()=>{
+            const listit = new ListItBuffer({
+                header: ["ABC", "DEFG", "HIJKLMN"],
+            });
+            listit.setHeaderRow(["ABC", "DEFG", "HIJKLMN"]);
+            listit.d([1,2,3]);
+            listit.setHeaderRow(["VWXYZ", "ABCD", "EFG"]);
+            assert.equal(listit.toString(), [
+                "VWXYZ ABCD EFG",
+                "    1    2   3",
+            ].join("\n"));
+        });
+        it("should override which exists", ()=>{
+            const listit = new ListItBuffer();
+            listit.setHeaderRow(["ABC", "DEFG", "HIJKLMN"]);
+            listit.d([1,2,3]);
+            listit.setHeaderRow(["VWXYZ", "ABCD", "EFG"]);
+            assert.equal(listit.toString(), [
+                "VWXYZ ABCD EFG",
+                "    1    2   3",
+            ].join("\n"));
+        });
+        it("should clear which exists when the parameter is null", ()=>{
+            const listit = new ListItBuffer();
+            listit.setHeaderRow(["ABC", "DEFG", "HIJKLMN"]);
+            listit.d([1,2,3]);
+            listit.setHeaderRow(null);
+            assert.equal(listit.toString(), "1 2 3");
+        });
+    });
 });
