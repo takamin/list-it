@@ -1,6 +1,7 @@
 "use strict";
 const assert = require('chai').assert;
 const ListItBuffer = require("../lib/list-it-buffer.js");
+const ansi = require("ansi-escape-sequences");
 describe("ListItBuffer", () => {
     describe(".isMultiDimensionalArray", () => {
         it("should throw error if the paramenter is not an array", () => {
@@ -82,6 +83,103 @@ describe("ListItBuffer", () => {
         it("should be true if all the elements are array", () => {
             assert.isTrue(ListItBuffer.isObjectArray([[]]));
             assert.isTrue(ListItBuffer.isObjectArray([[],[]]));
+        });
+    });
+    describe("#applyHeaderStyleOption", ()=> {
+        it("should return the parameter string when any option is not specfied", ()=>{
+            const listit = new ListItBuffer();
+            assert.equal(listit.applyHeaderStyleOption("HEADER"), "HEADER");
+        });
+        it("should return the bold string when headerBold option is false", ()=>{
+            const listit = new ListItBuffer({headerBold:false});
+            assert.equal(listit.applyHeaderStyleOption("HEADER"), "HEADER");
+        });
+        it("should return the bold string when headerBold option is true", ()=>{
+            const listit = new ListItBuffer({headerBold:true});
+            assert.equal(
+                listit.applyHeaderStyleOption("HEADER"),
+                `${ansi.style.bold}HEADER${ansi.style.reset}`);
+        });
+        it("should return the bold string when headerColor option is specfied", ()=>{
+            const listit = new ListItBuffer({headerColor:"red"});
+            assert.equal(
+                listit.applyHeaderStyleOption("HEADER"),
+                `${ansi.style.red}HEADER${ansi.style.reset}`);
+        });
+        it("should throw when headerColor option is invalid", ()=>{
+            assert.throw(()=>{
+                const listit = new ListItBuffer({headerColor:"N/A"});
+                listit.applyHeaderStyleOption("HEADER");
+            });
+        });
+    });
+    describe("#generateHeaderUnderline", ()=>{
+        describe("When data row does not exists", ()=>{
+            it("should return a null when any headerUnderline option is not specfied", ()=>{
+                const listit = new ListItBuffer({
+                    header: ["ABC", "DEFG", "HIJKLMN"],
+                });
+                assert.isNull(listit.generateHeaderUnderline());
+            });
+            it("should return a null when any headerUnderline option is false", ()=>{
+                const listit = new ListItBuffer({
+                    header: ["ABC", "DEFG", "HIJKLMN"],
+                    headerUnderline:false,
+                });
+                assert.isNull(listit.generateHeaderUnderline());
+            });
+            it("should return a null when the header is not set", ()=>{
+                const listit = new ListItBuffer({
+                    headerUnderline:true,
+                });
+                assert.isNull(listit.generateHeaderUnderline());
+            });
+            it("should return a underline string string when both of header and headerBold is set", ()=>{
+                const listit = new ListItBuffer({
+                    header: ["ABC", "DEFG", "HIJKLMN"],
+                    headerUnderline: true,
+                });
+                assert.equal(listit.toString(), [
+                    "ABC DEFG HIJKLMN",
+                    "--- ---- -------",
+                ].join("\n"));
+            });
+        });
+        describe("When data row exists", ()=>{
+            it("should return a null when any headerUnderline option is not specfied", ()=>{
+                const listit = new ListItBuffer({
+                    header: ["ABC", "DEFG", "HIJKLMN"],
+                });
+                listit.d([1,2,3]);
+                assert.isNull(listit.generateHeaderUnderline());
+            });
+            it("should return a null when any headerUnderline option is false", ()=>{
+                const listit = new ListItBuffer({
+                    header: ["ABC", "DEFG", "HIJKLMN"],
+                    headerUnderline:false,
+                });
+                listit.d([1,2,3]);
+                assert.isNull(listit.generateHeaderUnderline());
+            });
+            it("should return a null when the header is not set", ()=>{
+                const listit = new ListItBuffer({
+                    headerUnderline:true,
+                });
+                listit.d([1,2,3]);
+                assert.isNull(listit.generateHeaderUnderline());
+            });
+            it("should return a underline string string when both of header and headerBold is set", ()=>{
+                const listit = new ListItBuffer({
+                    header: ["ABC", "DEFG", "HIJKLMN"],
+                    headerUnderline: true,
+                });
+                listit.d([1,2,3]);
+                assert.equal(listit.toString(), [
+                    "ABC DEFG HIJKLMN",
+                    "--- ---- -------",
+                    "  1    2       3",
+                ].join("\n"));
+            });
         });
     });
 });

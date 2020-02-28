@@ -285,4 +285,83 @@ describe("ListIt", () => {
                 "123.456 VWXYZ");
         });
     });
+    describe("Header", ()=>{
+        describe("opt.header for constructor", ()=>{
+            it("should throw, if it is not an array", ()=>{
+                assert.throw(()=>{
+                    new ListIt({ header: "Invalid" });
+                });
+                assert.throw(()=>{
+                    new ListIt({ header: 999 });
+                });
+                assert.throw(()=>{
+                    new ListIt({ header: {} });
+                });
+                assert.throw(()=>{
+                    new ListIt({ header: ()=>{} });
+                });
+            });
+            it("should make a header row", () => {
+                const header = ["Item No.", "VAL", "EXTRA VALUE"];
+                const listit = new ListIt({header});
+                assert.equal(listit.d([
+                    [1,1.1,222],
+                    [2,12.3,111],
+                    [3,1.23,0],
+                ]).toString(),
+                    "Item No. VAL   EXTRA VALUE\n" +
+                    "       1  1.1          222\n" +
+                    "       2 12.3          111\n" +
+                    "       3  1.23           0");
+            });
+        });
+        describe("#setHeader", ()=>{
+            it("should throw, if the parameter is not an array", ()=>{
+                assert.throw(()=>{
+                    const listit = new ListIt();
+                    listit.setHeaderRow("Invalid");
+                });
+                assert.throw(()=>{
+                    const listit = new ListIt();
+                    listit.setHeaderRow(999);
+                });
+                assert.throw(()=>{
+                    const listit = new ListIt();
+                    listit.setHeaderRow({});
+                });
+                assert.throw(()=>{
+                    const listit = new ListIt();
+                    listit.setHeaderRow(()=>{});
+                });
+            });
+            it("should make a header row", () => {
+                const listit = new ListIt();
+                assert.equal(listit.setHeaderRow(
+                    ["Item No.", "VAL", "EXTRA VALUE"]
+                ).d([
+                    [1,1.1,222],
+                    [2,12.3,111],
+                    [3,1.23,0],
+                ]).toString(),
+                    "Item No. VAL   EXTRA VALUE\n" +
+                    "       1  1.1          222\n" +
+                    "       2 12.3          111\n" +
+                    "       3  1.23           0");
+            });
+            it("should not make a blank header", () => {
+                const listit = new ListIt();
+                assert.equal(listit.setHeaderRow(
+                    ["Item No." ]
+                ).d([
+                    [1,1.1,222],
+                    [2,12.3,111],
+                    [3,1.23,0],
+                ]).toString(),
+                    "Item No.          \n" +
+                    "       1  1.1  222\n" +
+                    "       2 12.3  111\n" +
+                    "       3  1.23   0");
+            });
+        });
+    });
 });
