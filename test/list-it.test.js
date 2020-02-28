@@ -57,6 +57,32 @@ describe("ListIt", () => {
             });
         });
     });
+    describe("#d", ()=>{
+        it("should accept the values for the cells", ()=>{
+            const listit = new ListIt();
+            listit.d([0, "1", true, null]);
+            listit.d([1, "A", false, null]);
+            assert.equal(listit.toString(), [
+                "0 1 true  (null)",
+                "1 A false (null)"
+            ].join("\n"));
+        });
+        it("should convert the Date contained in Object in Array to ISO string", ()=>{
+            const listit = new ListIt();
+            listit.d([
+                {d:new Date("2020-02-29T00:00:00.000Z")},
+                {d:new Date("2020-03-03T00:00:00.000Z")},
+            ]);
+            assert.equal(
+                listit.toString(),
+                [
+                    "d                       ",
+                    "2020-02-29T00:00:00.000Z",
+                    "2020-03-03T00:00:00.000Z",
+                ].join("\n")
+            );
+        });
+    });
     describe(".buffer", () => {
         it("should not set the autoAlign option", () => {
             const listit = ListIt.buffer();
@@ -98,13 +124,26 @@ describe("ListIt", () => {
 
             });
         });
-        it("should throw the width is not a number", ()=>{
+        it("should throw the width is not a number but empty string", ()=>{
             assert.throws(()=>{
                 const listit = new ListIt();
                 listit.d([
                     ["ABCDEFG", "OPQRSTU"],
                     ["HIJKLMN", "VWXYZ"],
                 ]).setColumnWidth(0, "");
+                assert.equal(listit.toString(),
+                    "ABC OPQRSTU\n" +
+                    "HIJ VWXYZ  ");
+
+            });
+        });
+        it("should throw the width is not a number but boolean", ()=>{
+            assert.throws(()=>{
+                const listit = new ListIt();
+                listit.d([
+                    ["ABCDEFG", "OPQRSTU"],
+                    ["HIJKLMN", "VWXYZ"],
+                ]).setColumnWidth(0, true);
                 assert.equal(listit.toString(),
                     "ABC OPQRSTU\n" +
                     "HIJ VWXYZ  ");
@@ -191,6 +230,19 @@ describe("ListIt", () => {
             assert.equal(listit.toString(),
                 "ABCDEFG OPQRSTU\n" +
                 "HIJKLMN VWXYZ  ");
+        });
+        it("should throw the width element is not a number", ()=>{
+            assert.throws(()=>{
+                const listit = new ListIt();
+                listit.d([
+                    ["ABCDEFG", "OPQRSTU"],
+                    ["HIJKLMN", "VWXYZ"],
+                ]).setColumnWidthAll([3, true]);
+                assert.equal(listit.toString(),
+                    "ABC OPQRSTU\n" +
+                    "HIJ VWXYZ  ");
+
+            });
         });
         it("should truncate the texts with the width", ()=>{
             const listit = new ListIt();

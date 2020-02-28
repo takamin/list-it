@@ -1,7 +1,24 @@
 list-it - Fixed Column Text Table Formatter
 ===========================================
 
+<span class="display:inline-block;"> ![version](https://img.shields.io/npm/v/list-it)
+![license](https://img.shields.io/npm/l/list-it)
 [![Build Status](https://travis-ci.org/takamin/list-it.svg?branch=master)](https://travis-ci.org/takamin/list-it)
+[![Coverage Status](https://coveralls.io/repos/github/takamin/list-it/badge.svg?branch=master)](https://coveralls.io/github/takamin/list-it?branch=master)
+![node version](https://img.shields.io/node/v/list-it)
+</span>  
+<span class="display:inline-block;"><span class="label">npm:</span>
+![vulnerabilities](https://img.shields.io/snyk/vulnerabilities/npm/list-it)
+![weekly downloads](https://img.shields.io/npm/dw/list-it)
+![monthly downloads](https://img.shields.io/npm/dm/list-it)
+</span>  
+<span class="display:inline-block;"><span class="label">GitHub:</span>
+![vulnerabilities](https://img.shields.io/snyk/vulnerabilities/github/takamin/list-it)
+![open issues](https://img.shields.io/github/issues-raw/takamin/list-it)
+![closed issues](https://img.shields.io/github/issues-closed-raw/takamin/list-it)
+![top language](https://img.shields.io/github/languages/top/takamin/list-it)
+![last commit](https://img.shields.io/github/last-commit/takamin/list-it)
+</span>
 
 DESCRIPTION
 -----------

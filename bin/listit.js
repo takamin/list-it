@@ -98,9 +98,6 @@ const createList = (inputData) => {
     return resultBuffer;
 };
 (async () => {
-    const termSize = require("term-size");
-    debug(`term-size: ${JSON.stringify(termSize())}`);
-
     const { options, argv } = Getopt.parseSystem();
     debug(`options:${JSON.stringify(options, null, 2)}`);
 
