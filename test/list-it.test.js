@@ -364,4 +364,68 @@ describe("ListIt", () => {
             });
         });
     });
+    describe("Auto header feature", ()=>{
+        const objectArray = [
+            {"No": 1, "Data": "Awesome data#1"},
+            {"No": 2, "Data": "Awesome data#2"},
+            {"No": 3, "Data": "Awesome data#3"},
+        ];
+        describe("when an array of object is offered to #d", ()=>{
+            describe("And there is no header", ()=>{
+                describe("And headerBold option is set", ()=>{
+                    it("should generate a header row", ()=>{
+                        const listit = new ListIt({headerBold:true});
+                        listit.d(objectArray);
+                        assert.deepEqual(listit.header, ["No", "Data"]);
+                    });
+                });
+                describe("And headerColor option is set", ()=>{
+                    it("should generate a header row", ()=>{
+                        const listit = new ListIt({headerColor:"red"});
+                        listit.d(objectArray);
+                        assert.deepEqual(listit.header, ["No", "Data"]);
+                    });
+                });
+                describe("And headerUnderline option is set", ()=>{
+                    it("should generate a header row", ()=>{
+                        const listit = new ListIt({headerUnderline:true});
+                        listit.d(objectArray);
+                        assert.deepEqual(listit.header, ["No", "Data"]);
+                    });
+                });
+                describe("And also all options about header are set", ()=>{
+                    it("should generate a header row", ()=>{
+                        const listit = new ListIt({
+                            headerBold:true,
+                            headerColor:"red",
+                            headerUnderline:true,
+                        });
+                        listit.d(objectArray);
+                        assert.deepEqual(listit.header, ["No", "Data"]);
+                    });
+                });
+                describe("But no options about header is set", ()=>{
+                    it("should not generate a header row", ()=>{
+                        const listit = new ListIt();
+                        listit.d(objectArray);
+                        assert.isUndefined(listit.header);
+                    });
+                });
+            });
+            describe("But a header is already specified", ()=>{
+                describe("Even all options about header are set", ()=>{
+                    it("should not override the header row from the objects", ()=>{
+                        const listit = new ListIt({
+                            headerBold:true,
+                            headerColor:"red",
+                            headerUnderline:true,
+                        });
+                        listit.setHeaderRow(["Index", "Name"]);
+                        listit.d(objectArray);
+                        assert.deepEqual(listit.header, ["Index", "Name"]);
+                    });
+                });
+            });
+        });
+    });
 });
