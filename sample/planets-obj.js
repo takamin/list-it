@@ -1,6 +1,10 @@
-var listit = require("../index.js");
-var buf = listit.buffer({ "autoAlign" : true });
-var PLANETS = [
+const ListIt = require("../index.js");
+const list = new ListIt({
+    headerBold: true,
+    headerColor: "green",
+    headerUnderline: true,
+});
+const PLANETS = [
     { name: "MERCURY", mass: 0.33, dia: 4879, dens: 5427, grav: 3.7, escV: 4.3, rot: 1407.6 },
     { name: "VENUS", mass: 4.87, dia: 12104, dens: 5243, grav: 8.9, escV: 10.4, rot: -5832.5 },
     { name: "EARTH", mass: 5.97, dia: 12756, dens: 5514, grav: 9.8, escV: 11.2, rot: 23.9 },
@@ -12,4 +16,4 @@ var PLANETS = [
     { name: "NEPTUNE", mass: 102, dia: 49528, dens: 1638, grav: 11.0, escV: 23.5, rot: 16.1 },
     { name: "PLUTO", mass: 0.0146, dia: 2370, dens: 2095, grav: 0.7, escV: 1.3, rot: -153.3 }
 ];
-console.log( buf.d( PLANETS ).toString() );
+console.log( list.d( PLANETS ).toString() );
