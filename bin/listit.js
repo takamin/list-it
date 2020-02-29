@@ -38,6 +38,7 @@ const Getopt = require("node-getopt").create(OPTIONS).bindHelp(USAGE);
 const HashArg = require("hash-arg");
 const ListIt = require("../index.js");
 const readline = require("readline");
+const ansi = require("ansi-escape-sequences");
 
 const readFile = inputFilename => {
     return new Promise((resolve, reject)=>{
@@ -75,7 +76,11 @@ const readInput = async inputFilename => {
 
 const _createList = (resultBuffer, inputData, name) => {
     if(Array.isArray(inputData)) {
-        const listit = new ListIt({});
+        const listit = new ListIt({
+            headerBold: true,
+            headerColor: "gray",
+            headerUnderline: true,
+        });
         resultBuffer.push({
             name, type: "list",
             list: listit.d(inputData),
@@ -109,13 +114,19 @@ const createList = (inputData) => {
     const { inputFilename } = HashArg.get(PARAMETERS, argv);
     debug(`inputFilename:${inputFilename}`);
 
-    const inputData = JSON.parse(await readInput(inputFilename));
-    debug(JSON.stringify(inputData, null, 2));
+    try {
+        const inputData = JSON.parse(await readInput(inputFilename));
+        debug(JSON.stringify(inputData, null, 2));
 
-    const result = createList(inputData);
-    result.forEach( data => {
-        console.log("");
-        console.log(`[${data.name}]:`);
-        console.log(`${data[data.type].toString()}`);
-    });
+        const result = createList(inputData);
+        result.forEach( data => {
+            console.log("");
+            console.log(`${ansi.style.bold}[${data.name}]${ansi.style.reset}:`);
+            console.log(`${data[data.type].toString()}`);
+        });
+    } catch(err) {
+        console.error(`Error in processing ${inputFilename?`a file ${JSON.stringify(inputFilename)}`:"stdin"}`);
+        console.error(`      ${err.message}`);
+        debug(err.stack);
+    }
 })();

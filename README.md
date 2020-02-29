@@ -70,23 +70,7 @@ This software is released under the MIT License
 The `listit` would print all data in the JSON file with its property name.
 In following example, `$` means root oject.
 
-```bash
-$ listit ./sample/planets.json
-
-[$]:
-name    mass      dia    dens grav escV rot
-MERCURY    0.33     4879 5427  3.7  4.3  1407.6
-VENUS      4.87    12104 5243  8.9 10.4 -5832.5
-EARTH      5.97    12756 5514  9.8 11.2    23.9
-MOON       0.0073   3475 3340  1.6  2.4   655.7
-MARS       0.642    6792 3933  3.7  5.0    24.6
-JUPITER 1898.0    142984 1326 23.1 59.5     9.9
-SATURN   568.0    120536  687  9.0 35.5    10.7
-URANUS    86.8     51118 1271  8.7 21.3   -17.2
-NEPTUNE  102.0     49528 1638 11.0 23.5    16.1
-PLUTO      0.0146   2370 2095  0.7  1.3  -153.3
-
-```
+![listit sample/planets.json output](https://takamin.github.io/list-it/images//sample-listit-cli-command-output.png)
 
 
 PROGRAMMING SAMPLE
@@ -174,11 +158,16 @@ PLUTO          0.0146    2370        2095        0.7        1.3     -153.3
 
 ### Object Array
 
+
 __[sample/planets-obj.js](sample/planets-obj.js)__
 ```
-var ListIt = require("list-it");
-var buf = new ListIt({ "autoAlign" : true });
-var PLANETS = [
+const ListIt = require("../index.js");
+const list = new ListIt({
+    headerBold: true,
+    headerColor: "green",
+    headerUnderline: true,
+});
+const PLANETS = [
     { name: "MERCURY", mass: 0.33, dia: 4879, dens: 5427,
         grav: 3.7, escV: 4.3, rot: 1407.6 },
     { name: "VENUS", mass: 4.87, dia: 12104, dens: 5243,
@@ -200,25 +189,13 @@ var PLANETS = [
     { name: "PLUTO", mass: 0.0146, dia: 2370, dens: 2095,
         grav: 0.7, escV: 1.3, rot: -153.3 }
 ];
-console.log( buf.d( PLANETS ).toString() );
+console.log( list.d( PLANETS ).toString() );
 ```
 
 outputs:
 
-```
-$ node sample/planets-obj.js
-name    mass      dia    dens grav escV rot
-MERCURY    0.33     4879 5427  3.7  4.3  1407.6
-VENUS      4.87    12104 5243  8.9 10.4 -5832.5
-EARTH      5.97    12756 5514  9.8 11.2    23.9
-MOON       0.0073   3475 3340  1.6  2.4   655.7
-MARS       0.642    6792 3933  3.7  5.0    24.6
-JUPITER 1898.0    142984 1326 23.1 59.5     9.9
-SATURN   568.0    120536  687  9.0 35.5    10.7
-URANUS    86.8     51118 1271  8.7 21.3   -17.2
-NEPTUNE  102.0     49528 1638 11.0 23.5    16.1
-PLUTO      0.0146   2370 2095  0.7  1.3  -153.3
-```
+![sample/planets-obj.js outputs](https://takamin.github.io/list-it/images/sample-planets-obj-js-output.png)
+
 
 ### East asian characters
 
@@ -260,47 +237,134 @@ $ node sample/japanese-food-jp.js
 
 
 
-API
----
+Class ListIt
+------------
 
-### class ListIt(opt)
+### CONSTRUCTOR
+
+* __ListIt(options)__
+
+### OPTIONS
+
+* __autoAlign__ - Specifies the number data alignment.
+* __columnWidth__ - Initializes the text max length for all columns.
+* __header__ - Sets a column header row.
+* __headerBold__ - Renders the header bold.
+* __headerColor__ - Specify header text color.
+* __headerUnderline__ - Draws a line under the header text.
+* __headerBold__ - Make header text bold.
+* __headerColor__ - Set color to the header text.
+* __headerUnderline__ - Add underline to the header text.
+
+### METHODS
+
+* __setColumnWidth__ - Sets a text max length to a column.
+* __setColumnWidthAll__ - Sets text max length to all columns.
+* __setHeaderRow__ - Set the column header row.
+* __d__ - Add cells or rows
+* __nl__ - New line
+* __toString__ - Format a table
+
+Constructor ListIt(opt)
+-----------------------
+
+__`const listit = new ListIt(opt)`__
 
 Creates a `ListIt` instance.
 
 The instance has current row that is a position for the columns to be added.
 
-You cannot edit the columns and rows that were already added using `d(...)` method.
+To add a cell, use 'd' method. Check the samples above.
 
-See the examples below.
+OPTION.autoAlign
+----------------
 
-#### opt.autoAlign
+__`autoAlign:boolean` (Default: `true`)__
 
-When this is set true, the data in cell will be aligned in automatic depending on its type.
-
+When this is set true, the data in cell will be aligned in Automatic depending on its type.
 The number will be aligned to the right taking account of its decimal point.
 
-* Type : boolean
-* Default setting : true
+OPTION.columnWidth
+------------------
 
-#### opt.columnWidth
+__`columnWidth:Array<number>|number|null` (Default: `null`)__
 
 Declare text width for columns by character length (or remove).
 
-* Type : Array<number>|number|null
-* Default: null
-
-**For Each Columns**
-
-An array of numbers could be specified.
+* __Set a Width For Each Columns__ - An array of numbers could be specified.
 Its each elements are set to the column at that position.
 A `null` as the element value means that width will not be specified.
-
-**For All Columns**
-
-If a single number is specified for this option, It will set to all columns.
+* __Set a Width For All Columns__ - If a single number is specified for this option, It will set to all columns.
 And also when the value is null, column width is not declared at all.
 
-#### ListIt#setColumnWidth(indexOfColumns:number, width:number)
+OPTION.header
+-------------
+
+__`header:Array<any>|null` (Default: `null`)__
+
+Sets a column header row with array.
+
+Even if the header is not specified, it might be created in the method `d` running.
+This header-auto-creation feature will be activated when following two condition is true.
+
+* The parameter for the `d` method is an object array.
+* One or more header-relating-options except for `header` are set.
+
+
+OPTION.headerBold
+-----------------
+
+__`headerBold:boolean` (Default: `false`)__
+
+This option makes the header text to render bold.
+But, actual appearance would be dependent on the terminal.
+
+If the header does not exists, no effect is appeared.
+
+OPTION.headerColor
+------------------
+
+__`headerColor:string|null` (Default: `null`)__
+
+With this option, specify the color of the header text with color names.
+But, actual appearance would be dependent on the terminal.
+
+If the header does not exists, no effect is appeared.
+
+Available color names:
+
+* "black"
+* "red"
+* "green"
+* "yellow"
+* "blue"
+* "magenta"
+* "cyan"
+* "white"
+* "grey"
+* "gray"
+* "brightRed"
+* "brightGreen"
+* "brightYellow"
+* "brightBlue"
+* "brightMagenta"
+* "brightCyan"
+* "brightWhite"
+
+
+OPTION.headerUnderline
+----------------------
+
+__`headerUnderline:boolean` (Default: `false`)__
+
+When this option is true, an underline will be drawn for the header text.
+
+If the header does not exists, no effect is appeared.
+
+ListIt#setColumnWidth
+----------------------------------------------------------
+
+__`setColumnWidth(indexOfColumns:number, width:number)`__
 
 Set the column width by text length.
 
@@ -319,7 +383,10 @@ RETURN VALUE:
 
 This method returns `this` instance to chain the next method call.
 
-#### ListIt#setColumnWidthAll(widthForAll:Array<number|null>|number|null)
+ListIt#setColumnWidthAll
+--------------------------------------------------------------------
+
+__`setColumnWidthAll(widthForAll:Array<number|null>|number|null)`__
 
 Set the whole column's width. See opt.columnWidth
 
@@ -331,14 +398,26 @@ RETURN VALUE:
 
 This method returns `this` instance to chain the next method call.
 
-### ListIt#d( data [, data ...] )
+ListIt#setHeaderRow
+-------------------
+
+__`setHeaderRow(header:Array<any>|null)`__
+
+With this method, set the column header row.
+For the parameter, it is same as OPTION.header.
+If null is specified, the header would be removed.
+
+ListIt#d
+-----------------------------
+
+__`d( data [, data ...] )`__
 
 This method adds one or more columns or rows at a time depending on
 the parameter data type.
 
 This method returns `this` object. So you can chain to call a next method.
 
-#### How to add column(s)
+### To Add column(s)
 
 If the type of `data` is a primitive type such as string or number,
 these are added to the current row as individual columns.
@@ -358,7 +437,7 @@ The above code make same result as below:
 EQUIVALENT CODE: buffer.d(1,2,3,4,5,6).nl();
 ```
 
-#### How to add row(s)
+### To add row(s)
 
 If the parameter `data` is an array contains one or more primitive data at least,
 it will added as one closed row.
@@ -381,13 +460,19 @@ EQUIVALENT CODE: buffer.d([ [1,2,3], [4,5,6] ]);
 ```
 
 
-### ListIt#nl()
+ListIt#nl
+-----------
+
+__`nl()`__
 
 Ends up a process for the current row.
 
 This method also returns `this` object.
 
-### ListIt#toString()
+ListIt#toString
+-----------------
+
+__`toString()`__
 
 Returns preformatted text table.
 
