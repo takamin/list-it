@@ -1,6 +1,17 @@
 CHANGES
 ====
 
+v1.3
+----
+
+* Adds options for header row
+    * `header`
+    * `headerBold`
+    * `headerColor`
+    * `headerUnderline`
+* Adds method `setHeaderRow`
+* Adds CLI command `listit`
+
 v1.2
 ----
 
@@ -8,6 +19,8 @@ v1.2
 * Change a method `setColumnWidth`.
 * Add a method `setColumnWidthAll`.
 * Add a method `getColumnWidth` (NO TEST).
+* Shows various badges on README.
+* Take a test coverage
 
 v1.1
 ----

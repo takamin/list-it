@@ -78,7 +78,7 @@ const _createList = (resultBuffer, inputData, name) => {
     if(Array.isArray(inputData)) {
         const listit = new ListIt({
             headerBold: true,
-            headerColor: "gray",
+            headerColor: "green",
             headerUnderline: true,
         });
         resultBuffer.push({
@@ -125,8 +125,12 @@ const createList = (inputData) => {
             console.log(`${data[data.type].toString()}`);
         });
     } catch(err) {
-        console.error(`Error in processing ${inputFilename?`a file ${JSON.stringify(inputFilename)}`:"stdin"}`);
-        console.error(`      ${err.message}`);
+        console.error(`Error in processing ${
+            inputFilename ? `a file ${
+                JSON.stringify(inputFilename)
+            }`:"stdin"
+        }`);
+        console.error(err.message);
         debug(err.stack);
     }
 })();
