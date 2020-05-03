@@ -106,10 +106,9 @@ describe("ListItBuffer", () => {
                 listit.applyHeaderStyleOption("HEADER"),
                 `${ansi.style.red}HEADER${ansi.style.reset}`);
         });
-        it("should throw when headerColor option is invalid", ()=>{
+        it("should throw if headerColor option is invalid", ()=>{
             assert.throw(()=>{
-                const listit = new ListItBuffer({headerColor:"N/A"});
-                listit.applyHeaderStyleOption("HEADER");
+                new ListItBuffer({headerColor:"N/A"});
             });
         });
     });

@@ -72,13 +72,14 @@ In following example, `$` means root oject.
 
 ![listit sample/planets.json output](https://takamin.github.io/list-it/images//sample-listit-cli-command-output.png)
 
+Using the exported ListIt class
+-------------------------------
 
-PROGRAMMING SAMPLE
-------------------
+### PROGRAMMING SAMPLE
 
 __[sample/japanese-food.js](sample/japanese-food.js)__
 
-```
+```javascript
 var ListIt = require("list-it");
 var buf = new ListIt();
 buf.setColumnWidth(1, 5);
@@ -106,7 +107,7 @@ console.log(
 
 outputs:
 
-```
+```bash
 $ node sample/japanese-food.js
 1 Sushi vinegared rice  Healthy
 2 Yakin Grilled meat on Juicy
@@ -115,14 +116,17 @@ $ node sample/japanese-food.js
 5 Sashi Very fresh slic Try it
 ```
 
-### autoAlign
+#### autoAlign and setHeaderRow
 
 __[sample/planets.js](sample/planets.js)__
 
-```
-var ListIt = require("list-it");
-var buf = new ListIt({ "autoAlign" : true });
-var PLANETS = [
+```javascript
+const ListIt = require("list-it");
+const listit = new ListIt({
+    autoAlign : true,
+    headerUnderline: true,
+});
+const PLANETS = [
     ["NAME", "Mass(10^24kg)", "Dia(km)", "Dens(kg/m3)",
                         "Grav(m/s2)", "EscV(km/s)", "Rot(hours)" ],
     ["MERCURY", 0.33,   4879,   5427,   3.7,    4.3,    1407.6  ],
@@ -136,14 +140,19 @@ var PLANETS = [
     ["NEPTUNE", 102,    49528,  1638,   11.0,   23.5,   16.1    ],
     ["PLUTO",   0.0146, 2370,   2095,   0.7,    1.3,    -153.3  ]
 ];
-console.log( buf.d( PLANETS ).toString() );
+
+console.log(listit
+    .setHeaderRow(PLANETS.shift())
+    .d(PLANETS).toString()
+);
 ```
 
 outputs:
 
-```
+```bash
 $ node sample/planets.js
 NAME    Mass(10^24kg) Dia(km) Dens(kg/m3) Grav(m/s2) EscV(km/s) Rot(hours)
+------- ------------- ------- ----------- ---------- ---------- ----------
 MERCURY        0.33      4879        5427        3.7        4.3     1407.6
 VENUS          4.87     12104        5243        8.9       10.4    -5832.5
 EARTH          5.97     12756        5514        9.8       11.2       23.9
@@ -156,11 +165,12 @@ NEPTUNE      102.0      49528        1638       11.0       23.5       16.1
 PLUTO          0.0146    2370        2095        0.7        1.3     -153.3
 ```
 
-### Object Array
+#### Object Array
 
 
 __[sample/planets-obj.js](sample/planets-obj.js)__
-```
+
+```javascript
 const ListIt = require("../index.js");
 const list = new ListIt({
     headerBold: true,
@@ -197,11 +207,11 @@ outputs:
 ![sample/planets-obj.js outputs](https://takamin.github.io/list-it/images/sample-planets-obj-js-output.png)
 
 
-### East asian characters
+#### East asian characters
 
 __[sample/japanese-food-jp.js](sample/japanese-food-jp.js)__
 
-```
+```javascript
 var ListIt = require("list-it");
 var buf = new ListIt();
 console.log(
@@ -226,7 +236,7 @@ console.log(
 
 outputs:
 
-```
+```bash
 $ node sample/japanese-food-jp.js
 1 寿司     酢とご飯とシーフード                   健康的だ
 2 焼肉     日本のグリルされたお肉                 ジューシー
@@ -236,15 +246,16 @@ $ node sample/japanese-food-jp.js
 ```
 
 
-
-Class ListIt
+API Reference
 ------------
 
-### CONSTRUCTOR
+### Class ListIt
+
+#### CONSTRUCTOR
 
 * __ListIt(options)__
 
-### OPTIONS
+#### OPTIONS
 
 * __autoAlign__ - Specifies the number data alignment.
 * __columnWidth__ - Initializes the text max length for all columns.
@@ -256,7 +267,7 @@ Class ListIt
 * __headerColor__ - Set color to the header text.
 * __headerUnderline__ - Add underline to the header text.
 
-### METHODS
+#### METHODS
 
 * __setColumnWidth__ - Sets a text max length to a column.
 * __setColumnWidthAll__ - Sets text max length to all columns.
@@ -265,8 +276,7 @@ Class ListIt
 * __nl__ - New line
 * __toString__ - Format a table
 
-Constructor ListIt(opt)
------------------------
+### Constructor ListIt(opt)
 
 __`const listit = new ListIt(opt)`__
 
@@ -276,16 +286,14 @@ The instance has current row that is a position for the columns to be added.
 
 To add a cell, use 'd' method. Check the samples above.
 
-OPTION.autoAlign
-----------------
+### OPTION.autoAlign
 
 __`autoAlign:boolean` (Default: `true`)__
 
 When this is set true, the data in cell will be aligned in Automatic depending on its type.
 The number will be aligned to the right taking account of its decimal point.
 
-OPTION.columnWidth
-------------------
+### OPTION.columnWidth
 
 __`columnWidth:Array<number>|number|null` (Default: `null`)__
 
@@ -297,8 +305,7 @@ A `null` as the element value means that width will not be specified.
 * __Set a Width For All Columns__ - If a single number is specified for this option, It will set to all columns.
 And also when the value is null, column width is not declared at all.
 
-OPTION.header
--------------
+### OPTION.header
 
 __`header:Array<any>|null` (Default: `null`)__
 
@@ -311,8 +318,7 @@ This header-auto-creation feature will be activated when following two condition
 * One or more header-relating-options except for `header` are set.
 
 
-OPTION.headerBold
------------------
+### OPTION.headerBold
 
 __`headerBold:boolean` (Default: `false`)__
 
@@ -321,8 +327,7 @@ But, actual appearance would be dependent on the terminal.
 
 If the header does not exists, no effect is appeared.
 
-OPTION.headerColor
-------------------
+### OPTION.headerColor
 
 __`headerColor:string|null` (Default: `null`)__
 
@@ -352,8 +357,7 @@ Available color names:
 * "brightWhite"
 
 
-OPTION.headerUnderline
-----------------------
+### OPTION.headerUnderline
 
 __`headerUnderline:boolean` (Default: `false`)__
 
@@ -361,8 +365,7 @@ When this option is true, an underline will be drawn for the header text.
 
 If the header does not exists, no effect is appeared.
 
-ListIt#setColumnWidth
-----------------------------------------------------------
+### ListIt#setColumnWidth
 
 __`setColumnWidth(indexOfColumns:number, width:number)`__
 
@@ -383,8 +386,7 @@ RETURN VALUE:
 
 This method returns `this` instance to chain the next method call.
 
-ListIt#setColumnWidthAll
---------------------------------------------------------------------
+### ListIt#setColumnWidthAll
 
 __`setColumnWidthAll(widthForAll:Array<number|null>|number|null)`__
 
@@ -398,8 +400,7 @@ RETURN VALUE:
 
 This method returns `this` instance to chain the next method call.
 
-ListIt#setHeaderRow
--------------------
+### ListIt#setHeaderRow
 
 __`setHeaderRow(header:Array<any>|null)`__
 
@@ -407,8 +408,7 @@ With this method, set the column header row.
 For the parameter, it is same as OPTION.header.
 If null is specified, the header would be removed.
 
-ListIt#d
------------------------------
+### ListIt#d
 
 __`d( data [, data ...] )`__
 
@@ -417,7 +417,7 @@ the parameter data type.
 
 This method returns `this` object. So you can chain to call a next method.
 
-### To Add column(s)
+#### To Add column(s)
 
 If the type of `data` is a primitive type such as string or number,
 these are added to the current row as individual columns.
@@ -437,7 +437,7 @@ The above code make same result as below:
 EQUIVALENT CODE: buffer.d(1,2,3,4,5,6).nl();
 ```
 
-### To add row(s)
+#### To add row(s)
 
 If the parameter `data` is an array contains one or more primitive data at least,
 it will added as one closed row.
@@ -460,8 +460,7 @@ EQUIVALENT CODE: buffer.d([ [1,2,3], [4,5,6] ]);
 ```
 
 
-ListIt#nl
------------
+### ListIt#nl
 
 __`nl()`__
 
@@ -469,8 +468,7 @@ Ends up a process for the current row.
 
 This method also returns `this` object.
 
-ListIt#toString
------------------
+### ListIt#toString
 
 __`toString()`__
 
@@ -480,4 +478,4 @@ Returns preformatted text table.
 LICENSE
 -------
 
-MIT
+This software is released under the MIT License, see [LICENSE](LICENSE)
