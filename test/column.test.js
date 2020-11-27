@@ -126,21 +126,21 @@ describe("Column", () => {
                 assert.equal(column.formatCell(cells[6].getData()), "  125.9    ");
             });
         });
-        describe("#updateNumWidth", ()=>{
+        describe("#updateNumLenMax", ()=>{
             it("should count for exponential numbers", ()=> {
                 const column = new Column();
-                column.updateNumWidth(1.0e-7);
-                assert.equal(column.getNumMaxWidth(), 6);
+                column.updateNumLenMax(1.0e-7);
+                assert.equal(column.numLenMax.getTotalLength(), 6);
             });
             it("should update for exponential numbers", ()=> {
                 const column = new Column();
-                column.updateNumWidth(1.0e-7);
-                column.updateNumWidth(12.5e-9);
-                column.updateNumWidth(1.5e-7);
-                assert.equal(column.getNumMaxWidth(), 7);
+                column.updateNumLenMax(1.0e-7);
+                column.updateNumLenMax(12.5e-9);
+                column.updateNumLenMax(1.5e-7);
+                assert.equal(column.numLenMax.getTotalLength(), 7);
             });
         });
-        describe("#makeAutoAlignNum", ()=>{
+        describe("#formatAutoAlignNumber", ()=>{
             it("should render numbers", ()=>{
                 const column = new Column();
                 column.setAutoAlign(true);
@@ -157,11 +157,11 @@ describe("Column", () => {
                     column.setCellAt(index, cell);
                 });
                 column.updateWidth();
-                assert.equal(column.makeAutoAlignNum(cells[0].getData()), "  3.00e-7");
-                assert.equal(column.makeAutoAlignNum(cells[1].getData()), " -3.00e-7");
-                assert.equal(column.makeAutoAlignNum(cells[2].getData()), "  1.20e-7");
-                assert.equal(column.makeAutoAlignNum(cells[3].getData()), " -1.25e-7");
-                assert.equal(column.makeAutoAlignNum(cells[4].getData()), "125.9    ");
+                assert.equal(column.formatAutoAlignNumber(cells[0].getData()), "  3.00e-7");
+                assert.equal(column.formatAutoAlignNumber(cells[1].getData()), " -3.00e-7");
+                assert.equal(column.formatAutoAlignNumber(cells[2].getData()), "  1.20e-7");
+                assert.equal(column.formatAutoAlignNumber(cells[3].getData()), " -1.25e-7");
+                assert.equal(column.formatAutoAlignNumber(cells[4].getData()), "125.9    ");
             });
             it("should render exponential numbers that the real part is integer", ()=>{
                 const column = new Column();
@@ -177,9 +177,9 @@ describe("Column", () => {
                     column.setCellAt(index, cell);
                 });
                 column.updateWidth();
-                assert.equal(column.makeAutoAlignNum(cells[0].getData()), " 3.0e-7");
-                assert.equal(column.makeAutoAlignNum(cells[1].getData()), "-3.0e-7");
-                assert.equal(column.makeAutoAlignNum(cells[2].getData()), " 1.0e-7");
+                assert.equal(column.formatAutoAlignNumber(cells[0].getData()), " 3.0e-7");
+                assert.equal(column.formatAutoAlignNumber(cells[1].getData()), "-3.0e-7");
+                assert.equal(column.formatAutoAlignNumber(cells[2].getData()), " 1.0e-7");
             });
             it("should render integer", ()=>{
                 const column = new Column();
@@ -195,38 +195,9 @@ describe("Column", () => {
                     column.setCellAt(index, cell);
                 });
                 column.updateWidth();
-                assert.equal(column.makeAutoAlignNum(cells[0].getData()), "  3.0e-7");
-                assert.equal(column.makeAutoAlignNum(cells[1].getData()), "123.0   ");
-                assert.equal(column.makeAutoAlignNum(cells[2].getData()), "  1.0e-7");
-            });
-        });
-        describe("#analyzeNumber", ()=>{
-            it("should recognize no exponential notation", ()=> {
-                const column = new Column();
-                assert.deepEqual(column.analyzeNumber(12.345), {
-                    "pointPos" : 2,
-                    "intStr" : "12",
-                    "fracStr" : "345",
-                    "expStr" :"",
-                });
-            });
-            it("should recognize exponential notation", ()=> {
-                const column = new Column();
-                assert.deepEqual(column.analyzeNumber(3e-7), {
-                    "pointPos" : 1,
-                    "intStr" : "3",
-                    "fracStr" : "0",
-                    "expStr" :"-7",
-                });
-            });
-            it("should recognize exponential notation", ()=> {
-                const column = new Column();
-                assert.deepEqual(column.analyzeNumber(12.34e-8), {
-                    "pointPos" : 1,
-                    "intStr" : "1",
-                    "fracStr" : "234",
-                    "expStr" :"-7",
-                });
+                assert.equal(column.formatAutoAlignNumber(cells[0].getData()), "  3.0e-7");
+                assert.equal(column.formatAutoAlignNumber(cells[1].getData()), "123.0   ");
+                assert.equal(column.formatAutoAlignNumber(cells[2].getData()), "  1.0e-7");
             });
         });
     });

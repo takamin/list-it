@@ -10,19 +10,20 @@ const ListItBuffer = require("./lib/list-it-buffer.js");
 /**
  * ListIt constructor.
  *
- * @class
- * @param {ListItOption|null} opt An option to create.
  * @example <caption>Create instace</caption>
  * const ListIt = require("list-it");
  * const listit = new ListIt({ autoAlign: true });
  * @description
  * In default, the `autoAlign` of option is true.
  */
-function ListIt(opt) {
-    ListItBuffer.call(this, opt);
+class ListIt  extends ListItBuffer {
+    /**
+     * @param {ListItOption|null} opt An option to create.
+     */
+    constructor(opt) {
+        super(opt);
+    }
 }
-
-ListIt.prototype = new ListItBuffer();
 
 /**
  * Create the ListIt instance.
