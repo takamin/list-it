@@ -37,9 +37,9 @@
   },
   "dependencies": {
     "ansi-escape-sequences": "^6.2.2",
-    "eastasianwidth": "^0.2.0",
     "debug": "^4.3.4",
+    "eastasianwidth": "^0.2.0",
     "hash-arg": "^1.0.6",
-    "node-getopt": "^0.3.2"
+    "node-getopt": "github:takamin/node-getopt"
   }
 }
