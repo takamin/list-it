@@ -29,17 +29,17 @@
   "devDependencies": {
     "chai": "^4.3.7",
     "coveralls": "^3.1.1",
-    "eslint": "^8.38.0",
-    "eslint-plugin-jsdoc": "^40.1.2",
+    "eslint": "^8.40.0",
+    "eslint-plugin-jsdoc": "^43.2.0",
     "eslint-watch": "^8.0.0",
     "mocha": "^10.2.0",
     "nyc": "^15.1.0"
   },
   "dependencies": {
-    "ansi-escape-sequences": "^6.2.1",
+    "ansi-escape-sequences": "^6.2.2",
     "eastasianwidth": "^0.2.0",
     "debug": "^4.3.4",
-    "hash-arg": "^1.0.5",
+    "hash-arg": "^1.0.6",
     "node-getopt": "^0.3.2"
   }
 }
