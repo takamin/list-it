@@ -39,7 +39,6 @@ module.exports = {
         "jsdoc/check-types": 1, // Recommended
         "jsdoc/implements-on-classes": 1, // Recommended
         "jsdoc/match-description": 1,
-        "jsdoc/newline-after-description": 1, // Recommended
         "jsdoc/no-types": "off",
         "jsdoc/no-undefined-types": 1, // Recommended
         "jsdoc/require-description": "off",
