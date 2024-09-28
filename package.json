@@ -32,14 +32,14 @@
     "eslint": "^8.40.0",
     "eslint-plugin-jsdoc": "^43.2.0",
     "eslint-watch": "^8.0.0",
-    "mocha": "^10.2.0",
+    "mocha": "^10.7.3",
     "nyc": "^15.1.0"
   },
   "dependencies": {
     "ansi-escape-sequences": "^6.2.2",
-    "debug": "^4.3.4",
+    "debug": "^4.3.7",
     "eastasianwidth": "^0.2.0",
-    "hash-arg": "^1.0.6",
+    "hash-arg": "^1.0.9",
     "node-getopt": "github:takamin/node-getopt"
   }
 }
